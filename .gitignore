@@ -13,5 +13,6 @@ yarn-error.log*
 build-errors.log
 
 # cache
-.parcel-cache
-.tmp
+.air-cache
+.next
+.cache

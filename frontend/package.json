@@ -3,6 +3,11 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
+    "@patternfly/patternfly": "^4.108.2",
+    "@patternfly/react-core": "^4.128.2",
+    "next": "^11.0.0",
+    "next-transpile-modules": "^8.0.0",
+    "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "web-vitals": "^1.0.1"
@@ -13,17 +18,18 @@
     "@typescript-eslint/eslint-plugin": "^4.27.0",
     "@typescript-eslint/parser": "^4.27.0",
     "eslint": "^7.29.0",
+    "eslint-config-next": "^11.0.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-react": "^7.24.0",
-    "parcel": "^2.0.0-beta.3.1",
     "prettier": "^2.3.1",
     "typescript": "^4.3.4"
   },
   "scripts": {
-    "start": "parcel serve ./src/index.html",
-    "build": "parcel build ./src/index.html",
-    "lint": "eslint src/**/*"
+    "dev": "next dev",
+    "start": "next start",
+    "build": "next build && next export",
+    "lint": "next lint && eslint src/**/*"
   },
   "eslintConfig": {
     "root": true,
@@ -74,7 +80,7 @@
   },
   "browserslist": {
     "production": [
-      ">0.2%",
+      ">1%",
       "not dead",
       "not op_mini all"
     ],
