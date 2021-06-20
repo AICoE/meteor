@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 
 	"github.com/gorilla/websocket"
+	"k8s.io/klog/v2"
 )
 
 // We'll need to define an Upgrader
@@ -29,14 +29,14 @@ func reader(conn *websocket.Conn) {
 		// read in a message
 		messageType, p, err := conn.ReadMessage()
 		if err != nil {
-			log.Println(err)
+			klog.Error(err)
 			return
 		}
 		// print out that message for clarity
 		fmt.Println(string(p))
 
 		if err := conn.WriteMessage(messageType, p); err != nil {
-			log.Println(err)
+			klog.Error(err)
 			return
 		}
 
@@ -51,7 +51,7 @@ func serveWs(w http.ResponseWriter, r *http.Request) {
 	// connection
 	ws, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
-		log.Println(err)
+		klog.Error(err)
 	}
 	// listen indefinitely for new messages coming
 	// through on our WebSocket connection
@@ -67,9 +67,11 @@ func setupRoutes() {
 	http.HandleFunc("/api/ws", serveWs)
 }
 
+const port = 8080
+
 func main() {
-	fmt.Println("Chat App v0.01")
+	klog.Infof("🌠 Meteor Command Center started at localhost:%d", port)
 	setupRoutes()
 
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(fmt.Sprintf(":%d", port), nil)
 }
