@@ -21,6 +21,7 @@ func main() {
 
 	router.HandleFunc("/api/health", api.Health)
 	router.HandleFunc("/api", api.Health)
+	router.HandleFunc("/api/v1/order", api.Order)
 
 	spa := frontend.Frontend{StaticPath: "dist", NotFound: "404.html"}
 	router.PathPrefix("/").Handler(spa)
