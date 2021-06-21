@@ -5,6 +5,7 @@
   "dependencies": {
     "@patternfly/patternfly": "^4.108.2",
     "@patternfly/react-core": "^4.128.2",
+    "@patternfly/react-log-viewer": "^4.1.19",
     "next": "^11.0.0",
     "next-transpile-modules": "^8.0.0",
     "prop-types": "^15.7.2",

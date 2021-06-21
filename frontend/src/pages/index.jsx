@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 import {
   Bullseye,
   Button,
@@ -21,11 +22,18 @@ import { LogoCard } from '../components/LogoCard';
 const FormCard = () => {
   const [value, setValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     setIsLoading(true);
-    console.log(value);
     event.preventDefault();
+
+    const response = await fetch('/api/v1/order', {
+      method: 'POST',
+      body: JSON.stringify({ url: value }),
+    });
+
+    router.push(response.headers.get('Location'));
   };
 
   return (

@@ -10,12 +10,12 @@ export const DefaultLayout = ({ besides, below }) => (
     <Head>
       <title>Meteor</title>
     </Head>
-    <Flex direction={{ default: 'column' }} alignItems={{ default: 'alignItemsCenter' }} className="flex-spacing__vertical">
+    <Flex direction={{ default: 'column' }} alignItems={{ default: 'alignItemsCenter' }} className="flex-spacing__vertical" width="100%">
       <Flex className="flex-spacing__horizontal">
         <FlexItem>
           <LogoCard />
         </FlexItem>
-        <FlexItem>{besides}</FlexItem>
+        {besides && <FlexItem>{besides}</FlexItem>}
       </Flex>
       <FlexItem>{below}</FlexItem>
     </Flex>
