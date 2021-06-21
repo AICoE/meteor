@@ -1,11 +1,11 @@
 root = "."
-tmp_dir = ".tmp"
+tmp_dir = ".air-cache"
 
 [build]
-  bin = "./.tmp/main"
-  cmd = "go build -o ./.tmp/main ."
+  bin = "./.air-cache/main"
+  cmd = "go build -o ./.air-cache/main ./cmd/meteor/main.go"
   delay = 1000
-  exclude_dir = ["assets", "tmp", "vendor"]
+  exclude_dir = ["assets", "air-cache", "vendor"]
   exclude_file = []
   exclude_regex = []
   exclude_unchanged = false

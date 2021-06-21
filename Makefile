@@ -2,7 +2,7 @@ build-frontend:
 	cd frontend && npm run build
 
 run: build-frontend
-	cd backend && go run ./main.go
+	cd backend && go run ./cmd/meteor/main.go
 
 dev-frontend:
 	cd frontend && npm run dev

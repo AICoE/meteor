@@ -1,4 +1,4 @@
-package main
+package ws
 
 import (
 	"fmt"
@@ -56,22 +56,4 @@ func serveWs(w http.ResponseWriter, r *http.Request) {
 	// listen indefinitely for new messages coming
 	// through on our WebSocket connection
 	reader(ws)
-}
-
-func setupRoutes() {
-	fs := http.FileServer(http.Dir("../frontend/dist"))
-	http.Handle("/", fs)
-	http.HandleFunc("/api", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Simple Server")
-	})
-	http.HandleFunc("/api/ws", serveWs)
-}
-
-const port = 8080
-
-func main() {
-	klog.Infof("🌠 Meteor Command Center started at localhost:%d", port)
-	setupRoutes()
-
-	http.ListenAndServe(fmt.Sprintf(":%d", port), nil)
 }
