@@ -14,13 +14,12 @@ func order(w http.ResponseWriter, r *http.Request) {
 
 }
 
-const port = 8080
-
 func main() {
 	router := mux.NewRouter()
 
-	router.HandleFunc("/api/health", api.Health)
 	router.HandleFunc("/api", api.Health)
+	router.HandleFunc("/api/health", api.Health)
+	router.HandleFunc("/api/v1/health", api.Health)
 	router.HandleFunc("/api/v1/order", api.Order)
 
 	spa := frontend.Frontend{StaticPath: "dist", NotFound: "404.html"}
@@ -34,7 +33,7 @@ func main() {
 		ReadTimeout:  15 * time.Second,
 	}
 
-	klog.Infof("🌠 Meteor Command Center started at localhost:%d", port)
+	klog.Infof("🌠 Meteor Command Center started at localhost:8000")
 	klog.Fatal(srv.ListenAndServe())
 
 }
