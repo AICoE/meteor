@@ -4,6 +4,7 @@ repos:
     rev: v1.1.9
     hooks:
       - id: remove-tabs
+        exclude: '.*\.go|.*\.mod|Makefile'
 
   - repo: git://github.com/pre-commit/pre-commit-hooks
     rev: v3.3.0
@@ -14,6 +15,7 @@ repos:
       - id: check-added-large-files
       - id: check-case-conflict
       - id: check-json
+        exclude: tsconfig.json
       - id: check-symlinks
       - id: detect-private-key
 
