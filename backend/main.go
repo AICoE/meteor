@@ -1,25 +1,24 @@
 package main
 
 import (
+	"encoding/json"
 	"net/http"
 	"time"
 
+	"github.com/AICoE/meteor/pkg/api"
+	"github.com/AICoE/meteor/pkg/frontend"
 	"github.com/gorilla/mux"
-	"github.com/operate-first/meteor/pkg/api"
-	"github.com/operate-first/meteor/pkg/frontend"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"k8s.io/klog/v2"
 )
-
-func order(w http.ResponseWriter, r *http.Request) {
-
-}
 
 func main() {
 	router := mux.NewRouter()
 
-	router.HandleFunc("/api", api.Health)
-	router.HandleFunc("/api/health", api.Health)
-	router.HandleFunc("/api/v1/health", api.Health)
+	router.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
+		json.NewEncoder(w).Encode(map[string]string{"status": "ok"})
+	})
+	router.Handle("/metrics", promhttp.Handler())
 	router.HandleFunc("/api/v1/order", api.OrderEndpoint)
 
 	spa := frontend.Frontend{StaticPath: "dist", NotFound: "404.html"}
@@ -33,7 +32,7 @@ func main() {
 		ReadTimeout:  15 * time.Second,
 	}
 
-	klog.Infof("🌠 Meteor Command Center started at localhost:8000")
+	klog.Infof("🌠 Meteor Command Center started at http://localhost:8000")
 	klog.Fatal(srv.ListenAndServe())
 
 }

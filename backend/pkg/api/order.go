@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/AICoE/meteor/pkg/metrics"
 	"github.com/patrickmn/go-cache"
 	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/apimachinery/pkg/util/uuid"
@@ -49,6 +50,7 @@ func OrderEndpoint(w http.ResponseWriter, r *http.Request) {
 			Created: time.Now(),
 			Status:  []string{"Order received"},
 		}
+		metrics.OrdersTotal.Inc()
 		// Update order from request body
 		// FIXME: Unsafe, can overwrite initialization above
 		err := json.NewDecoder(r.Body).Decode(&order)
@@ -63,7 +65,7 @@ func OrderEndpoint(w http.ResponseWriter, r *http.Request) {
 		Set(&order)
 		go processOrder(&order)
 
-		w.Header().Set("Location", fmt.Sprintf("/order/%s", order.Uuid))
+		w.Header().Set("Location", fmt.Sprintf("/order.html?uuid=%s", order.Uuid))
 		w.WriteHeader(http.StatusCreated)
 
 	// Retrieve existing order status

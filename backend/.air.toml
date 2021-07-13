@@ -3,7 +3,7 @@ tmp_dir = ".air-cache"
 
 [build]
   bin = "./.air-cache/main"
-  cmd = "go build -o ./.air-cache/main ./cmd/meteor/main.go"
+  cmd = "go build -o ./.air-cache/main main.go"
   delay = 1000
   exclude_dir = ["assets", "air-cache", "vendor"]
   exclude_file = []
