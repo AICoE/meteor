@@ -16,7 +16,7 @@ import (
 
 type Order struct {
 	Url     string    `json:"url"`
-	Uuid    types.UID `json:"uuid"`
+	Uid     types.UID `json:"uid"`
 	Created time.Time `json:"created"`
 	Status  []string  `json:"status"`
 }
@@ -26,7 +26,7 @@ var globalStore = cache.New(24*time.Hour, 30*time.Minute)
 
 // Enter order into cache
 func Set(order *Order) {
-	globalStore.Set(string(order.Uuid), order, 0)
+	globalStore.Set(string(order.Uid), order, 0)
 }
 
 // Recall order from cache
@@ -46,7 +46,7 @@ func OrderEndpoint(w http.ResponseWriter, r *http.Request) {
 	case http.MethodPost:
 		// Initialize Order object with arbitrary values
 		order := Order{
-			Uuid:    uuid.NewUUID(),
+			Uid:     uuid.NewUUID(),
 			Created: time.Now(),
 			Status:  []string{"Order received"},
 		}
@@ -59,27 +59,27 @@ func OrderEndpoint(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		klog.Infof("Storing order %s", order.Uuid)
+		klog.Infof("Storing order %s", order.Uid)
 
 		// Enter into cache and start async processing
 		Set(&order)
 		go processOrder(&order)
 
-		w.Header().Set("Location", fmt.Sprintf("/order.html?uuid=%s", order.Uuid))
+		w.Header().Set("Location", fmt.Sprintf("/order/%s", order.Uid))
 		w.WriteHeader(http.StatusCreated)
 
 	// Retrieve existing order status
 	case http.MethodGet:
 		// Get request should contain UUID param
-		uuid, ok := r.URL.Query()["uuid"]
-		if !ok || len(uuid[0]) < 1 || uuid[0] == "" {
+		uid, ok := r.URL.Query()["uid"]
+		if !ok || len(uid[0]) < 1 || uid[0] == "" {
 			w.WriteHeader(http.StatusNotFound)
 			return
 		}
 
 		// Recall from cache
-		klog.Infof("Fetching order %s", uuid[0])
-		order, err := Get(uuid[0])
+		klog.Infof("Fetching order %s", uid[0])
+		order, err := Get(uid[0])
 		if err != nil {
 			klog.Errorf("Order get failed: %s", err)
 			w.WriteHeader(http.StatusNotFound)

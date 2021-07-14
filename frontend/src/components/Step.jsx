@@ -10,18 +10,12 @@ const statusIcon = {
   pending: <PendingIcon />,
 };
 
-export const Step = ({ idx, title, expanded, status, handleToggle, content }) => (
+export const Step = ({ title, status, content }) => (
   <AccordionItem>
-    <AccordionToggle
-      onClick={() => {
-        handleToggle(idx);
-      }}
-      isExpanded={expanded === idx}
-      id={`toggle-${idx}`}
-    >
+    <AccordionToggle isExpanded={true}>
       {status && statusIcon[status]} {title}
     </AccordionToggle>
-    <AccordionContent isHidden={expanded !== idx}>{content ? content : 'This step has not started yet.'}</AccordionContent>
+    <AccordionContent isHidden={false}>{content ? content : 'This step has not started yet.'}</AccordionContent>
   </AccordionItem>
 );
 
