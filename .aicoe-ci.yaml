@@ -1,2 +1,10 @@
 ---
 check: []
+
+build:
+    base-image: registry.access.redhat.com/ubi8/nodejs-14
+    build-stratergy: Source
+    registry: quay.io
+    registry-org: aicoe
+    registry-project: meteor-shower
+    registry-secret: aicoe-pusher-secret
