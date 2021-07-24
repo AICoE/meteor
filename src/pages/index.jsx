@@ -22,12 +22,18 @@ const Index = () => {
     }
     setIsSubmitted(true);
 
-    const response = await fetch('/api/v1/order', {
+    const response = await fetch('/api/meteors', {
       method: 'POST',
-      body: JSON.stringify({ url: value }),
+      headers: new Headers({
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      }),
+      body: JSON.stringify({ url: value, ref: 'main', ttl: 10000 }),
     });
+    console.log(response);
 
-    router.push(response.headers.get('Location'));
+    const body = await response.json();
+    router.push(`/order/${body.metadata.name}`);
   };
 
   const validate = () => {
