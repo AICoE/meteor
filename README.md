@@ -37,3 +37,7 @@ Team Shooting Star focuses on polishing the tutorial and project content, as wel
 ### Team Telescope
 
 Team Telescope focuses on measuring the overall impact of the tool by implementing well defined metrics and dashboards. Team members will work with both developers and users to assess the tool, utilizing data and user feedback to suggest improvements.
+
+## Community
+
+To keep up with this project's progress, check out [Meteor](https://youtube.com/playlist?list=PL8VBRDTElCWp5i9bU486ewQDAQ0wYT0U4) on the Operate First YouTube channel.
