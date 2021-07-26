@@ -1,33 +1,39 @@
-# Operate First template for repositories
+# Project Meteor
 
-Derive new repositories from this template
+Similar to how a *meteoroid* enters the atmosphere, becomes visible as a *meteor* and finally hits the Earth's surface as a *meteorite*, with this initiative we aim to create better visibility and impact of the tools, processes and expertise developed by the AICoE through project *Meteor*.
 
-List of featurese:
+This project is being driven by members of the Artificial Intelligence Center of Excellence (AICoE), part of Red Hat's Office of the CTO. This team is focused on applying AI to Red Hat's core business and services through open source development that enables user's needs and fosters open collaboration in the data science and machine learning space.
 
-## License
+Project Meteor is a combined effort across the AICoE to provide a single tool for data scientists and other users where they can interact with, explore and leverage all of our services, tools and technologies for developing intelligent applications.
 
-This template ensures new repos are created compliant with [ADR 0001](https://www.operate-first.cloud/blueprints/blueprint/docs/adr/0001-use-gpl3-as-license.md) and use GNU GPL v3 license.
+## Tool
 
-## AI-CoE CI Github application
+The tool is an interactive [AIDevSecOps tutorial](https://github.com/AICoE/elyra-aidevsecops-tutorial) and web application that is rendered as both a static [JupyterBook](https://jupyterbook.org/) and an interactive Jupyter Lab environment by taking as an input the user's GitHub repository (specifically a fork of the tutorial repository) and runs the build/deployment pipelines in the background to render the notebook environments as the final output.
 
-AI-CoE CI provides easy and quick integration for build pipelines and checks for pull requests.
+The entire project workflow is shown below:
 
-An empty [`.aicoe-ci.yaml`](.aicoe-ci.yaml) is created here, disabling all checks via this CI provider by default. Documentation can be found [here](https://github.com/AICoE/aicoe-ci/).
+![Project Workflow](/docs/images/project-flowchart.png)
 
-## Prow CI
+The tool is supported by and hosted on the [Operate First](https://www.operate-first.cloud/) environment. Operate First is an initiative started at the Red Hat's Office of the CTO, to work towards making operations as fundamental as functionality in the upstreams they contribute to and the products they produce. To learn more about Operate First and how you can be involved, you can visit our [website](https://www.operate-first.cloud/) or our [GitHub community](https://github.com/operate-first)!
 
-Prow is a CI provider developed for Kubernetes needs. Provides chat-ops management of pull requests, issues and declarative management for labels, branches and many more.
+### AIDevSecOps Tutorial
 
-We host our own deployment of Prow in Operate First available at [https://prow.operate-first.cloud/](https://prow.operate-first.cloud/).
+The tutorial is used to discuss the interface between Data Science and DevOps using project templates, pipelines and bots. Moreover, it highlights that data scientists are not so different from developers, and DevSecOps practices and tools can (and should) be applied to MLOps.
 
-Supported commands are listed [here](https://prow.operate-first.cloud/command-help). We have also enabled Prow to consume on-repository configuration files. You can specify your config in [`.prow.yaml`](.prow.yaml). Additional centralized configuration can be found in the [thoth-application repository](https://github.com/thoth-station/thoth-application/tree/master/prow/overlays/cnv-prod).
+The demo application used in this tutorial is the "hello world" for AI: MNIST Classification. The ML application developed itself is not the main focus of the product, but its the various services, workflows, and pipeline integrations supported by the product that we would like to highlight and provide for our users.
 
-## Pre-commit
+## Project Workstreams
 
-By extension to Prow, we define a default pre-commit config for new repositories. Default hook configuration can be found in [`.pre-commit-config.yaml`](.pre-commit-config.yaml). Pre-commit is executed via Prow, see [`.prow.yaml`](.prow.yaml) for details.
+In order to support the goals of Project Meteor, we have created 3 workstreams to efficiently manage and focus on the different aspects of the project. The workstreams are as follows:
 
-We enable yamllint hook by default, since most of our repositories use yaml files extensively. Default configuration for this hook is located at [`yamllint-config.yaml`](yamllint-config.yaml).
+### Team Comet
 
-To install and enable pre-commit locally please follow the instructions [here](https://pre-commit.com/#quick-start).
+Team Comet focuses on the technical planning and implementation of the tool. Their main responsibilities include designing the technical roadmap/design of the tool, implementing the backend CI/build pipelines for deploying the web application and maintaining the application.
 
-It is advised for all contributors to enable pre-commit git hook via `pre-commit install` after cloning any repo within Operate First.
+### Team Shooting Star
+
+Team Shooting Star focuses on polishing the tutorial and project content, as well as other AICoE tutorials and workshops to be well adopted into the tool. Team members will work on improving the interactive tutorials both in terms of the content and the user experience from a data scientist perspective.
+
+### Team Telescope
+
+Team Telescope focuses on measuring the overall impact of the tool by implementing well defined metrics and dashboards. Team members will work with both developers and users to assess the tool, utilizing data and user feedback to suggest improvements.
