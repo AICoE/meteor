@@ -6,15 +6,15 @@ This project is being driven by members of the Artificial Intelligence Center of
 
 Project Meteor is a combined effort across the AICoE to provide a single tool for data scientists and other users where they can interact with, explore and leverage all of our services, tools and technologies for developing intelligent applications.
 
-## Tool
+## Proof of concept
 
-The tool is an interactive [AIDevSecOps tutorial](https://github.com/AICoE/elyra-aidevsecops-tutorial) and web application that is rendered as both a static [JupyterBook](https://jupyterbook.org/) and an interactive Jupyter Lab environment by taking as an input the user's GitHub repository (specifically a fork of the tutorial repository) and runs the build/deployment pipelines in the background to render the notebook environments as the final output.
+The first application is an interactive [AIDevSecOps tutorial](https://github.com/AICoE/elyra-aidevsecops-tutorial) and web application that is rendered as both a static [JupyterBook](https://jupyterbook.org/) and an interactive Jupyter Lab environment. The user adds the git repository of the tutorial to a webinterface which triggers the build and deployment pipelines in the background.
 
 The entire project workflow is shown below:
 
 ![Project Workflow](/docs/images/project-flowchart.png)
 
-The tool is supported by and hosted on the [Operate First](https://www.operate-first.cloud/) environment. Operate First is an initiative started at the Red Hat's Office of the CTO, to work towards making operations as fundamental as functionality in the upstreams they contribute to and the products they produce. To learn more about Operate First and how you can be involved, you can visit our [website](https://www.operate-first.cloud/) or our [GitHub community](https://github.com/operate-first)!
+All is build on the infrastructure and services provided by the [Operate First Community Cloud](https://www.operate-first.cloud/).
 
 ### AIDevSecOps Tutorial
 
