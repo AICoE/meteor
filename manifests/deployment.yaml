@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: meteor-shower
+    labels:
+        app: meteor-shower
+spec:
+    selector:
+        matchLabels:
+            app: meteor-shower
+    replicas: 1
+    strategy:
+        rollingUpdate:
+            maxSurge: 25%
+            maxUnavailable: 25%
+        type: RollingUpdate
+    template:
+        metadata:
+            labels:
+                app: meteor-shower
+        spec:
+            serviceAccount: meteor-shower
+            containers:
+                - name: meteor-shower
+                  image: quay.io/tcoufal/meteor-shower:latest
+                  resources:
+                      requests:
+                          cpu: 100m
+                          memory: 300Mi
+                      limits:
+                          cpu: 100m
+                          memory: 300Mi
+                  ports:
+                      - containerPort: 3000
+                        name: http
+            restartPolicy: Always

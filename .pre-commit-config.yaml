@@ -14,6 +14,7 @@ repos:
       - id: check-added-large-files
       - id: check-case-conflict
       - id: check-json
+        exclude: tsconfig.json
       - id: check-symlinks
       - id: detect-private-key
 

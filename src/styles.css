@@ -1,0 +1,29 @@
+html,
+body,
+body > * {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.cover {
+  height: 100%;
+  background: #000 url(http://www.script-tutorials.com/demos/360/images/stars.png) repeat top center;
+}
+
+.flex-spacing__horizontal > div {
+  margin: 3em;
+}
+.flex-spacing__vertical > div {
+  margin: 40em;
+}
+
+.text-content {
+  color: white !important;
+  text-align: center;
+}
+
+.label {
+  color: black;
+  grid-template-columns: unset !important;
+}

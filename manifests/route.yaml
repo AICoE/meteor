@@ -1,0 +1,11 @@
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+    name: meteor-shower
+spec:
+    to:
+        kind: Service
+        name: meteor-shower
+    port:
+        targetPort: http
