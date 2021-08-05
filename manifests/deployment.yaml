@@ -33,4 +33,7 @@ spec:
                   ports:
                       - containerPort: 3000
                         name: http
+                  env:
+                      - name: GA_TRACKING_ID
+                        value: G-QXLQRGTYL2
             restartPolicy: Always
