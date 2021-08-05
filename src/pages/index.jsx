@@ -73,7 +73,7 @@ const Index = () => {
                   style={{ minWidth: '20vw', verticalAlign: 'middle' }}
                 />
                 <Button variant="primary" isLoading={isSubmitted} onClick={handleSubmit} isDisabled={pristine || validate() !== 'success'}>
-                  {(!isSubmitted && <ArrowRightIcon />) || <>Sumbitting</>}
+                  {(!isSubmitted && <ArrowRightIcon />) || <>Submitting</>}
                 </Button>
               </InputGroup>
             </FormGroup>
