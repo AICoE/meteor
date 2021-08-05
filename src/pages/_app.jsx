@@ -7,7 +7,7 @@ import '../styles.css';
 App.getInitialProps = async (appctx) => {
   if (typeof window === 'undefined') {
     // Only server-side evals should result in prometheus imports. Client side imports doesn't make sense here.
-    const metrics = require('../metrics');
+    const metrics = require('../metrics'); // eslint-disable-line no-undef
     metrics.httpRequestsTotal.labels({ method: appctx.ctx.req.method, statusCode: appctx.ctx.res.statusCode, path: appctx.ctx.req.url }).inc();
   }
   return {};
