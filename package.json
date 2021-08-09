@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@kubernetes/client-node": "^0.15.0",
-    "@patternfly/patternfly": "^4.108.2",
+    "@patternfly/patternfly": "^4.125.3",
     "@patternfly/react-core": "^4.128.2",
     "@patternfly/react-log-viewer": "^4.4.0",
     "next": "^11.0.0",
