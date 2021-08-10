@@ -1,0 +1,22 @@
+.icon {
+  height: 150px;
+  display: block;
+  margin: auto;
+
+  .cls_1 {
+    fill: #fff;
+  }
+
+  .cls_1,
+  .cls_3 {
+    fill-rule: evenodd;
+  }
+
+  .cls_2 {
+    opacity: 0.5;
+  }
+
+  .cls_4 {
+    mask: url(#mask);
+  }
+}
