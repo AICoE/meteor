@@ -1,0 +1,33 @@
+.footer_dark {
+  background: #151515 !important;
+  margin-top: auto;
+  max-height: 100px;
+}
+.pf-c-page .footer_dark {
+  /* Hide long overflowing tocs */
+  z-index: 1;
+}
+.footer_dark > * {
+  font-weight: 300;
+  font-size: 12px;
+  color: #d2d2d2;
+}
+.footer_dark a {
+  padding-right: var(--pf-global--spacer--sm);
+  padding-left: var(--pf-global--spacer--sm);
+  border-right: var(--pf-global--BorderWidth--sm) solid #d2d2d2;
+  font-weight: 300;
+  color: #d2d2d2;
+  text-decoration: underline;
+}
+.footer_dark a:first-of-type {
+  padding-left: 0;
+}
+.footer_dark a:last-of-type {
+  padding-right: 0;
+  border: none;
+}
+
+.ws-org-pfsite-site-copyright {
+  white-space: nowrap;
+}
