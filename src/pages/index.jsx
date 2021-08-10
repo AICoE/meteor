@@ -1,9 +1,10 @@
 import React from 'react';
-import { Bullseye, PageSection, Flex, FlexItem, Divider, TextContent, TextVariants, Text } from '@patternfly/react-core';
+import { Bullseye, PageSection, Flex, FlexItem, Divider, TextContent, TextVariants, Text, Title, Tile } from '@patternfly/react-core';
 import Head from 'next/head';
 import Form from '../components/Form';
 import Layout from '../components/Layout';
 import Header from '../components/Header';
+import Meteors from '../components/Meteors';
 
 const Index = () => (
   <Layout>
@@ -38,6 +39,20 @@ const Index = () => (
           laboriosam corporis adipisci aspernatur.
         </FlexItem>
       </Flex>
+    </PageSection>
+    <PageSection>
+      <Bullseye>
+        <TextContent>
+          <Title headingLevel="h6" size="md">
+            Available meteors
+          </Title>
+        </TextContent>
+      </Bullseye>
+    </PageSection>
+    <PageSection>
+      <Bullseye>
+        <Meteors />
+      </Bullseye>
     </PageSection>
   </Layout>
 );

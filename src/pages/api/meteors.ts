@@ -12,7 +12,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     httpRequestsTotal.labels({ method, statusCode: HttpStatusCode.CREATED, path: '/api/meteors' }).inc();
   } else if (method === 'GET') {
     const meteors = await listMeteors();
-    res.status(HttpStatusCode.OK).json(meteors.map((m: any) => m.metadata.name));
+    res.status(HttpStatusCode.OK).json(meteors.map((m: any) => m));
     httpRequestsTotal.labels({ method, statusCode: HttpStatusCode.OK, path: '/api/meteors' }).inc();
   } else {
     res.status(HttpStatusCode.METHOD_NOT_ALLOWED).setHeader('Allow', ['GET', 'POST']);
