@@ -29,7 +29,7 @@ const MeteorForm = () => {
         'Content-Type': 'application/json',
         Accept: 'application/json',
       }),
-      body: JSON.stringify({ url: value, ref: 'main', ttl: 10000 }),
+      body: JSON.stringify({ url: value, ref: 'HEAD' }),
     });
 
     const body = await response.json();
@@ -57,7 +57,7 @@ const MeteorForm = () => {
                 required={true}
                 placeholder="https://github.com/org/repo"
                 onChange={handleValueChange}
-                aria-label="text input example"
+                aria-label="repository url"
                 id="url"
               />
               <Button variant="primary" isLoading={isSubmitted} onClick={handleSubmit} isDisabled={pristine || validate() !== 'success'}>

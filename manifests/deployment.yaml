@@ -22,7 +22,7 @@ spec:
             serviceAccount: meteor-shower
             containers:
                 - name: meteor-shower
-                  image: quay.io/tcoufal/meteor-shower:latest
+                  image: meteor-shower
                   resources:
                       requests:
                           cpu: 100m

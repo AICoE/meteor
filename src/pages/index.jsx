@@ -1,5 +1,5 @@
 import React from 'react';
-import { Bullseye, PageSection, Flex, FlexItem, Divider, TextContent, TextVariants, Text, Title, Tile } from '@patternfly/react-core';
+import { Bullseye, PageSection, Flex, FlexItem, Divider, TextContent, TextVariants, Text, Title } from '@patternfly/react-core';
 import Head from 'next/head';
 import Form from '../components/Form';
 import Layout from '../components/Layout';

@@ -12,18 +12,18 @@
 }
 
 @function multiple-box-shadow($n) {
-  $value: '#{random(2000)}px #{random(2000)}px #FFF';
+  $value: '#{random(8000)}px #{random(2000)}px #FFF';
   @for $i from 2 through $n {
-    $value: '#{$value} , #{random(2000)}px #{random(2000)}px #FFF';
+    $value: '#{$value} , #{random(8000)}px #{random(2000)}px #FFF';
   }
 
   @return unquote($value);
 }
 
 $timer: 50s;
-$shadows-small: multiple-box-shadow(700);
-$shadows-medium: multiple-box-shadow(200);
-$shadows-big: multiple-box-shadow(100);
+$shadows-small: multiple-box-shadow(1500);
+$shadows-medium: multiple-box-shadow(800);
+$shadows-big: multiple-box-shadow(300);
 
 .small {
   width: 1px;

@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Flex, FlexItem, Tile } from '@patternfly/react-core';
 import useSWR from 'swr';
 import { useRouter } from 'next/router';
