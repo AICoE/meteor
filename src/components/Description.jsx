@@ -10,8 +10,25 @@ import {
   Button,
 } from '@patternfly/react-core';
 import ExternalLinkSquareAltIcon from '@patternfly/react-icons/dist/js/icons/external-link-square-alt-icon';
+import useSWR from 'swr';
+
+const meteorUrlInConsole = (consoleUrl, meteorMeta) =>
+  `${consoleUrl}/k8s/ns/${meteorMeta.namespace}/meteor.operate-first.cloud~v1alpha1~Meteor/${meteorMeta.name}`;
+
+const fetcher = (url) => fetch(url).then((res) => res.json());
+
+const useConsole = () => {
+  const { data, error } = useSWR('/api/console', fetcher);
+
+  return {
+    consoleUrl: data?.consoleUrl || '',
+    isLoading: !error && !data,
+    isError: error,
+  };
+};
 
 const Description = ({ order, isLoading }) => {
+  const { consoleUrl } = useConsole();
   const calcExpiration = () => (order ? order.spec.ttl - Math.floor((new Date() - new Date(order.metadata.creationTimestamp)) / 1000) : 0);
 
   const facts = [
@@ -27,7 +44,10 @@ const Description = ({ order, isLoading }) => {
             iconPosition="right"
             component="a"
             variant="link"
+            href={consoleUrl && order && meteorUrlInConsole(consoleUrl, order.metadata)}
+            target="_blank"
             isSmall
+            isDisabled={!(consoleUrl && order)}
           >
             Show Details
           </Button>
