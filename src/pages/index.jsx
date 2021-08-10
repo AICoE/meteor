@@ -1,5 +1,5 @@
 import React from 'react';
-import { Bullseye, PageSection, Flex, FlexItem, Divider } from '@patternfly/react-core';
+import { Bullseye, PageSection, Flex, FlexItem, Divider, TextContent, TextVariants, Text } from '@patternfly/react-core';
 import Head from 'next/head';
 import Form from '../components/Form';
 import Layout from '../components/Layout';
@@ -10,7 +10,14 @@ const Index = () => (
     <Head>
       <title>Meteor</title>
     </Head>
-    <Header />
+    <Header>
+      <Bullseye>
+        <TextContent style={{ color: 'unset' }}>
+          <Text component={TextVariants.h1}>Meteor</Text>
+          <Text component={TextVariants.p}>Take your Jupyter Notebooks for a spin and show your impact.</Text>
+        </TextContent>
+      </Bullseye>
+    </Header>
     <PageSection style={{ backgroundColor: 'transparent' }} isFilled>
       <Bullseye>
         <Form />

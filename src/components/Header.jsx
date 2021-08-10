@@ -1,20 +1,18 @@
 import React from 'react';
-import { Bullseye, Text, TextContent, TextVariants } from '@patternfly/react-core';
+import PropTypes from 'prop-types';
 
 import styles from './Header.module.scss';
 
-const Header = () => (
+const Header = ({ children }) => (
   <div className={styles.background}>
-    <Bullseye>
-      <TextContent className={styles.text}>
-        <Text component={TextVariants.h1}>Meteor</Text>
-        <p>Take your Jupyter Notebooks for a spin and show your impact.</p>
-      </TextContent>
-    </Bullseye>
+    {children}
     <div className={styles.small} />
     <div className={styles.medium} />
     <div className={styles.large} />
   </div>
 );
 
+Header.propTypes = {
+  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
+};
 export default Header;

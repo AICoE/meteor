@@ -1,10 +1,7 @@
 // based of https://codepen.io/saransh/pen/BKJun
 
-.text {
-  color: var(--pf-global--Color--light-100);
-}
-
 .background {
+  color: var(--pf-global--Color--light-100);
   background: radial-gradient(ellipse at bottom, #1b2735 0%, var(--pf-c-page__header--BackgroundColor) 30%);
   height: 500px;
   min-height: 500px;
