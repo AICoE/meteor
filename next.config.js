@@ -9,4 +9,9 @@ client.collectDefaultMetrics();
 module.exports = withTM({
   // Handle `/metrics` calls as if it is a call to `/api/metrics`
   rewrites: async () => [{ source: '/metrics', destination: '/api/metrics' }],
+  // Exposed to both client and server
+  publicRuntimeConfig: {
+    github: 'https://github.com/AICoE?q=meteor',
+    slack: 'https://join.slack.com/t/operatefirst/shared_invite/zt-o2gn4wn8-O39g7sthTAuPCvaCNRnLww',
+  },
 });
