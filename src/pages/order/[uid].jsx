@@ -9,11 +9,12 @@ import Layout from '../../components/Layout';
 
 import ArrowLeftIcon from '@patternfly/react-icons/dist/js/icons/arrow-left-icon';
 import ExternalLinkAltIcon from '@patternfly/react-icons/dist/js/icons/external-link-alt-icon';
+import Link from 'next/link';
 
 const fetcher = (uid) => uid && fetch(`/api/meteor/${uid}`).then((res) => res.json());
 
 const useOrder = (uid) => {
-  const { data, error } = useSWR(uid, fetcher);
+  const { data, error } = useSWR(uid, fetcher, { refreshInterval: 5000 });
 
   return {
     order: data,
@@ -33,8 +34,8 @@ const Order = () => {
   }
 
   const launchButtons = [
-    { name: 'JupyterHub', href: order?.status?.jupyterBook?.url || '' },
-    { name: 'website', href: order?.status?.jupyterHub?.url || '' },
+    { name: 'JupyterHub', href: order?.status?.jupyterHub?.url || '' },
+    { name: 'website', href: order?.status?.jupyterBook?.url ? `http://${order?.status?.jupyterBook?.url}` : '' },
   ];
 
   return (
@@ -49,9 +50,11 @@ const Order = () => {
             <Card>
               <CardHeader>
                 <CardTitle>
-                  <Button variant="link" component="a" href="/" style={{ paddingLeft: 0 }}>
-                    <ArrowLeftIcon />
-                  </Button>
+                  <Link href="/">
+                    <Button variant="link" style={{ paddingLeft: 0 }}>
+                      <ArrowLeftIcon />
+                    </Button>
+                  </Link>
                   {order?.metadata?.name}
                 </CardTitle>
               </CardHeader>

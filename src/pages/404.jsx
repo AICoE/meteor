@@ -3,6 +3,7 @@ import { Bullseye, Button, TextContent, Title } from '@patternfly/react-core';
 import Layout from '../components/Layout';
 import ArrowRightIcon from '@patternfly/react-icons/dist/js/icons/arrow-right-icon';
 import NotFoundIcon from '../components/NotFoundIcon';
+import Link from 'next/link';
 
 const Page404 = () => (
   <Layout>
@@ -12,9 +13,11 @@ const Page404 = () => (
           404: We lost that page
         </Title>
         <NotFoundIcon />
-        <Button variant="link" component="a" href="/" isLarge>
-          Return to homepage <ArrowRightIcon />
-        </Button>
+        <Link href="/">
+          <Button variant="link" component="a" isLarge>
+            Return to homepage <ArrowRightIcon />
+          </Button>
+        </Link>
       </TextContent>
     </Bullseye>
   </Layout>

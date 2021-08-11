@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import getConfig from 'next/config';
-import { Brand, Button, Page, PageHeader, PageHeaderTools, PageHeaderToolsItem } from '@patternfly/react-core';
+import Link from 'next/link';
+import { Button, Page, PageHeader, PageHeaderTools, PageHeaderToolsItem } from '@patternfly/react-core';
+import { WrappedBrand } from './Wrapped';
 import Footer from './Footer';
 import GitHubIcon from '@patternfly/react-icons/dist/js/icons/github-icon';
 import SlackIcon from '@patternfly/react-icons/dist/js/icons/slack-icon';
@@ -26,8 +28,9 @@ const Layout = ({ children }) => {
     <Page
       header={
         <PageHeader
-          logo={<Brand src="/logo192.png" alt="Meteor logo" style={{ height: '1.5em' }} />}
+          logo={<WrappedBrand src="/logo192.png" alt="Meteor logo" style={{ height: '1.5em' }} />}
           logoProps={{ href: '/' }}
+          logoComponent={Link}
           headerTools={
             <PageHeaderTools>
               {headerTools.map((t) => (

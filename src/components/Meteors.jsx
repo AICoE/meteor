@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Flex, FlexItem, Skeleton, Tile } from '@patternfly/react-core';
+import { Flex, FlexItem, Skeleton } from '@patternfly/react-core';
 import useSWR from 'swr';
 import Link from 'next/link';
 import MeteorIcon from '@patternfly/react-icons/dist/js/icons/meteor-icon';
+import { WrappedTile } from './Wrapped';
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -23,9 +24,9 @@ const MeteorTile = ({ name, content, isLoading }) => (
       <Skeleton width="250px" height="6rem" />
     ) : (
       <Link href={`/order/${name}`}>
-        <Tile title={name} icon={<MeteorIcon />}>
+        <WrappedTile title={name} icon={<MeteorIcon />}>
           {content}
-        </Tile>
+        </WrappedTile>
       </Link>
     )}
   </FlexItem>
