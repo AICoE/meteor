@@ -1,7 +1,8 @@
 import React from 'react';
-import { Flex, FlexItem, Tile } from '@patternfly/react-core';
+import PropTypes from 'prop-types';
+import { Flex, FlexItem, Skeleton, Tile } from '@patternfly/react-core';
 import useSWR from 'swr';
-import { useRouter } from 'next/router';
+import Link from 'next/link';
 import MeteorIcon from '@patternfly/react-icons/dist/js/icons/meteor-icon';
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
@@ -16,20 +17,34 @@ const useMeteors = () => {
   };
 };
 
+const MeteorTile = ({ name, content, isLoading }) => (
+  <FlexItem style={{ margin: '1em 1em' }}>
+    {isLoading ? (
+      <Skeleton width="250px" height="6rem" />
+    ) : (
+      <Link href={`/order/${name}`}>
+        <Tile title={name} icon={<MeteorIcon />}>
+          {content}
+        </Tile>
+      </Link>
+    )}
+  </FlexItem>
+);
+
+MeteorTile.propTypes = {
+  name: PropTypes.string,
+  content: PropTypes.string,
+  isLoading: PropTypes.bool,
+};
+
 const Meteors = () => {
   const { data: meteors } = useMeteors();
-  const router = useRouter();
 
   return (
     <Flex justifyContent={{ default: 'justifyContentCenter' }}>
-      {meteors &&
-        meteors.map((m) => (
-          <FlexItem key={m.metadata.uid} style={{ margin: '1em 1em' }}>
-            <Tile title={m.metadata.name} icon={<MeteorIcon />} onClick={() => router.push(`/order/${m.metadata.name}`)}>
-              {m.spec.url}
-            </Tile>
-          </FlexItem>
-        ))}
+      {meteors
+        ? meteors.map((m) => <MeteorTile key={m.metadata.uid} name={m.metadata.name} content={m.spec.url} />)
+        : [...Array(5)].map((_, i) => <MeteorTile key={`skeleton-${i}`} isLoading />)}
     </Flex>
   );
 };
