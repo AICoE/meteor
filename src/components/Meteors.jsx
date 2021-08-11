@@ -2,6 +2,7 @@ import React from 'react';
 import { Flex, FlexItem, Tile } from '@patternfly/react-core';
 import useSWR from 'swr';
 import { useRouter } from 'next/router';
+import MeteorIcon from '@patternfly/react-icons/dist/js/icons/meteor-icon';
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -24,7 +25,7 @@ const Meteors = () => {
       {meteors &&
         meteors.map((m) => (
           <FlexItem key={m.metadata.uid} style={{ margin: '1em 1em' }}>
-            <Tile title={m.metadata.name} onClick={() => router.push(`/order/${m.metadata.name}`)}>
+            <Tile title={m.metadata.name} icon={<MeteorIcon />} onClick={() => router.push(`/order/${m.metadata.name}`)}>
               {m.spec.url}
             </Tile>
           </FlexItem>

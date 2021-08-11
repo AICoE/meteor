@@ -1,16 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  DescriptionList,
-  DescriptionListTerm,
-  DescriptionListGroup,
-  DescriptionListDescription,
-  Skeleton,
-  Spinner,
-  Button,
-} from '@patternfly/react-core';
+import { DescriptionList, DescriptionListTerm, DescriptionListGroup, DescriptionListDescription, Skeleton, Button } from '@patternfly/react-core';
 import ExternalLinkSquareAltIcon from '@patternfly/react-icons/dist/js/icons/external-link-square-alt-icon';
 import useSWR from 'swr';
+
+import PhaseIcon from './PhaseIcon';
 
 const meteorUrlInConsole = (consoleUrl, meteorMeta) =>
   `${consoleUrl}/k8s/ns/${meteorMeta.namespace}/meteor.operate-first.cloud~v1alpha1~Meteor/${meteorMeta.name}`;
@@ -37,7 +31,13 @@ const Description = ({ order, isLoading }) => {
       description: 'Status',
       value: (
         <>
-          Building <Spinner isSVG size="sm" />{' '}
+          {order?.status ? (
+            <>
+              {order.status.phase} <PhaseIcon phase={order.status.phase} />
+            </>
+          ) : (
+            'Unknown'
+          )}
           <Button
             style={{ float: 'right', padding: 0 }}
             icon={<ExternalLinkSquareAltIcon />}
@@ -85,6 +85,7 @@ Description.propTypes = {
     }),
     status: PropTypes.shape({
       conditions: PropTypes.object,
+      phase: PropTypes.string,
     }),
   }),
 };

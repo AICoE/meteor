@@ -19,12 +19,12 @@ const Index = () => (
         </TextContent>
       </Bullseye>
     </Header>
-    <PageSection style={{ backgroundColor: 'transparent' }} isFilled>
+    <PageSection style={{ backgroundColor: 'transparent' }}>
       <Bullseye>
         <Form />
       </Bullseye>
     </PageSection>
-    <PageSection>
+    <PageSection isFilled>
       <Flex alignItems={{ default: 'alignItemsCenter' }} justifyContent={{ default: 'justifyContentCenter' }}>
         <FlexItem style={{ maxWidth: '30%' }}>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate explicabo, distinctio eveniet quam voluptates rerum soluta assumenda
