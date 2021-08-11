@@ -17,11 +17,12 @@ const MeteorForm = () => {
     setPristine(false);
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (event) => {
     if (validate() === 'error' || pristine) {
       return;
     }
     setIsSubmitted(true);
+    event.preventDefault();
 
     const response = await fetch('/api/meteors', {
       method: 'POST',
@@ -47,7 +48,7 @@ const MeteorForm = () => {
   return (
     <Card isHoverable className={styles.card}>
       <CardBody>
-        <Form>
+        <Form onSubmit={handleSubmit}>
           <FormGroup helperTextInvalid="Value must be an URL" helperTextInvalidIcon={<ExclamationCircleIcon />} fieldId="url" validated={validate()}>
             <InputGroup>
               <TextInput
@@ -60,7 +61,7 @@ const MeteorForm = () => {
                 aria-label="repository url"
                 id="url"
               />
-              <Button variant="primary" isLoading={isSubmitted} onClick={handleSubmit} isDisabled={pristine || validate() !== 'success'}>
+              <Button variant="primary" type="submit" isLoading={isSubmitted} isDisabled={pristine || validate() !== 'success'}>
                 {(!isSubmitted && <ArrowRightIcon />) || <>Submitting</>}
               </Button>
             </InputGroup>
