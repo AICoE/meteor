@@ -5,6 +5,7 @@ import ExternalLinkSquareAltIcon from '@patternfly/react-icons/dist/js/icons/ext
 import useSWR from 'swr';
 
 import PhaseIcon from './PhaseIcon';
+import Time from './Time';
 
 const meteorUrlInConsole = (consoleUrl, meteorMeta) =>
   `${consoleUrl}/k8s/ns/${meteorMeta.namespace}/meteor.operate-first.cloud~v1alpha1~Meteor/${meteorMeta.name}`;
@@ -23,7 +24,6 @@ const useConsole = () => {
 
 const Description = ({ order, isLoading }) => {
   const { consoleUrl } = useConsole();
-  const calcExpiration = () => (order ? order.spec.ttl - Math.floor((new Date() - new Date(order.metadata.creationTimestamp)) / 1000) : 0);
 
   const facts = [
     { description: 'Repository URL', value: !isLoading ? <a href={order.spec.url}>{order.spec.url}</a> : <Skeleton /> },
@@ -54,7 +54,7 @@ const Description = ({ order, isLoading }) => {
         </>
       ),
     },
-    { description: 'Expires at', value: !isLoading && `${calcExpiration()} s` },
+    { description: 'Expires in', value: !isLoading && order?.status && <Time date={new Date(order.status.expirationTimestamp)} /> },
   ];
 
   return (
@@ -86,6 +86,7 @@ Description.propTypes = {
     status: PropTypes.shape({
       conditions: PropTypes.object,
       phase: PropTypes.string,
+      expirationTimestamp: PropTypes.string,
     }),
   }),
 };
