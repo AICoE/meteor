@@ -27,16 +27,17 @@ const Index = () => (
     <PageSection isFilled>
       <Flex alignItems={{ default: 'alignItemsCenter' }} justifyContent={{ default: 'justifyContentCenter' }}>
         <FlexItem style={{ maxWidth: '30%' }}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate explicabo, distinctio eveniet quam voluptates rerum soluta assumenda
-          nihil laborum consequuntur eos magnam repellendus, maxime cum iusto illo? Maiores fugit autem ipsam ab ullam laborum, magni expedita
-          consectetur sint quas, enim mollitia libero hic! Eos, obcaecati? Sapiente corrupti pariatur et fuga.
+          Project Meteor is an open source technology that automates the creation of interactive environments alongside publication-quality static
+          content. It provides a single tool for users to explore and test drive services, tools, and emerging technologies for developing
+          intelligent applications. This project is being developed by members of the Red Hat's Artificial Intelligence Center of Excellence
+          (AICoE), who hope to create better visibility and impact of projects developed in the open.
         </FlexItem>
         <Divider isVertical />
         <FlexItem style={{ maxWidth: '30%' }}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates esse facilis a! Suscipit esse facere delectus quo pariatur autem
-          aliquid, quos dignissimos, ex fugit laborum. Dignissimos harum error ab quaerat atque non blanditiis cupiditate iusto minima sunt velit
-          praesentium illum deserunt obcaecati totam, dolores voluptatibus, porro earum voluptates odit ut? Sed molestiae amet, corrupti dolorem
-          laboriosam corporis adipisci aspernatur.
+          How it works: 1) Provide a link to your GitHub repo in the form above. 2) Our bots will look for dependency files, such as Pipfiles, and
+          use this information in our pipelines to build container images of your repository. 3) Interact with your Jupyter notebooks in a live JupyterLab
+          environment, or view organized, high-quality, and easily shareable static content in a JupyterBook.
+          New to Meteor? Check out the available meteors below to explore the environment, or view the source code on <a href={"https://github.com/AICoE/meteor"}>Github</a>.
         </FlexItem>
       </Flex>
     </PageSection>
