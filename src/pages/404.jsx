@@ -1,19 +1,25 @@
 import React from 'react';
-import { Button, Text, TextContent, TextVariants } from '@patternfly/react-core';
-import DefaultLayout from '../components/DefaultLayout';
+import { Bullseye, Button, TextContent, Title } from '@patternfly/react-core';
+import Layout from '../components/Layout';
+import ArrowRightIcon from '@patternfly/react-icons/dist/js/icons/arrow-right-icon';
+import NotFoundIcon from '../components/NotFoundIcon';
+import Link from 'next/link';
 
 const Page404 = () => (
-  <DefaultLayout
-    besides={
-      <TextContent className="text-content">
-        <Text component={TextVariants.h1}>Nothing is here.</Text>
-        <Text component={TextVariants.p}>{"Seems like there's nothing in here."}</Text>
-
-        <Button component="a" variant="link" href="/">
-          Go to the title page
-        </Button>
+  <Layout>
+    <Bullseye style={{ textAlign: 'center' }}>
+      <TextContent>
+        <Title headingLevel="h1" size="3xl">
+          404: We lost that page
+        </Title>
+        <NotFoundIcon />
+        <Link href="/">
+          <Button variant="link" component="a" isLarge>
+            Return to homepage <ArrowRightIcon />
+          </Button>
+        </Link>
       </TextContent>
-    }
-  />
+    </Bullseye>
+  </Layout>
 );
 export default Page404;

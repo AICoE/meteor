@@ -1,17 +1,20 @@
 import React from 'react';
-import { Accordion, Bullseye } from '@patternfly/react-core';
+import { Button, Card, CardBody, CardFooter, CardHeader, CardTitle, Divider, Flex, FlexItem, PageSection } from '@patternfly/react-core';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import useSWR from 'swr';
 
-import Step from '../../components/Step';
 import Description from '../../components/Description';
-import Fulfilment from '../../components/Fulfilment';
+import Layout from '../../components/Layout';
+
+import ArrowLeftIcon from '@patternfly/react-icons/dist/js/icons/arrow-left-icon';
+import ExternalLinkAltIcon from '@patternfly/react-icons/dist/js/icons/external-link-alt-icon';
+import Link from 'next/link';
 
 const fetcher = (uid) => uid && fetch(`/api/meteor/${uid}`).then((res) => res.json());
 
 const useOrder = (uid) => {
-  const { data, error } = useSWR(uid, fetcher);
+  const { data, error } = useSWR(uid, fetcher, { refreshInterval: 5000 });
 
   return {
     order: data,
@@ -27,27 +30,51 @@ const Order = () => {
 
   if (isError) {
     router.push('/404');
-    return <div className="cover" />;
+    return <Layout />;
   }
 
-  const isFulfilled = order?.status?.jupyterBook?.url && order?.status?.jupyterHub?.name ? 'ok' : 'running';
-
-  const steps = [
-    { title: 'Order details', status: 'ok', content: <Description isLoading={isLoading} order={order} /> },
-    { title: 'Fulfilment', status: isFulfilled, content: <Fulfilment isLoading={isLoading} order={order} /> },
+  const launchButtons = [
+    { name: 'JupyterHub', href: order?.status?.jupyterHub?.url || '' },
+    { name: 'website', href: order?.status?.jupyterBook?.url ? `http://${order?.status?.jupyterBook?.url}` : '' },
   ];
 
   return (
-    <Bullseye height="100%" className="cover">
+    <Layout>
       <Head>
-        <title>Meteor no. {order?.metadata.name}</title>
+        <title>Meteor {order?.metadata.name}</title>
       </Head>
-      <Accordion asDefinitionList style={{ width: '800px' }}>
-        {steps.map((s, idx) => (
-          <Step key={idx} {...s} />
-        ))}
-      </Accordion>
-    </Bullseye>
+      <div style={{ height: '200px', marginBottom: '-200px', backgroundColor: 'var(--pf-c-page__header--BackgroundColor)' }}></div>
+      <PageSection style={{ backgroundColor: 'transparent' }}>
+        <Flex alignItems={{ default: 'alignItemsFlexStart' }} justifyContent={{ default: 'justifyContentCenter' }}>
+          <FlexItem>
+            <Card>
+              <CardHeader>
+                <CardTitle>
+                  <Link href="/">
+                    <Button variant="link" style={{ paddingLeft: 0 }}>
+                      <ArrowLeftIcon />
+                    </Button>
+                  </Link>
+                  {order?.metadata?.name}
+                </CardTitle>
+              </CardHeader>
+              <Divider />
+              <CardBody>
+                <Description isLoading={isLoading} order={order} />
+              </CardBody>
+              <Divider />
+              <CardFooter>
+                {launchButtons.map((b) => (
+                  <Button key={b.name} variant="link" component="a" target="_blank" href={b.href} isDisabled={!b.href}>
+                    Open as {b.name} <ExternalLinkAltIcon />
+                  </Button>
+                ))}
+              </CardFooter>
+            </Card>
+          </FlexItem>
+        </Flex>
+      </PageSection>
+    </Layout>
   );
 };
 

@@ -1,87 +1,60 @@
-import React, { useState } from 'react';
-import { useRouter } from 'next/router';
-import { Bullseye, Button, Card, Brand, CardBody, Form, FormGroup, InputGroup, TextInput } from '@patternfly/react-core';
-import ArrowRightIcon from '@patternfly/react-icons/dist/js/icons/arrow-right-icon';
-import ExclamationCircleIcon from '@patternfly/react-icons/dist/js/icons/exclamation-circle-icon';
+import React from 'react';
+import { Bullseye, PageSection, Flex, FlexItem, Divider, TextContent, TextVariants, Text, Title } from '@patternfly/react-core';
 import Head from 'next/head';
+import Form from '../components/Form';
+import Layout from '../components/Layout';
+import Header from '../components/Header';
+import Meteors from '../components/Meteors';
 
-const Index = () => {
-  const [value, setValue] = useState('');
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [pristine, setPristine] = useState(true);
-  const router = useRouter();
-
-  const handleValueChange = (v) => {
-    setValue(v);
-    setPristine(false);
-  };
-
-  const handleSubmit = async () => {
-    if (validate() === 'error' || pristine) {
-      return;
-    }
-    setIsSubmitted(true);
-
-    const response = await fetch('/api/meteors', {
-      method: 'POST',
-      headers: new Headers({
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      }),
-      body: JSON.stringify({ url: value, ref: 'main', ttl: 10000 }),
-    });
-    console.log(response);
-
-    const body = await response.json();
-    router.push(`/order/${body.metadata.name}`);
-  };
-
-  const validate = () => {
-    if (value) {
-      return value.match(/https?:\/\/.*/g) ? 'success' : 'error';
-    } else {
-      return pristine ? 'default' : 'error';
-    }
-  };
-
-  return (
-    <Bullseye height="100%" className="cover">
-      <Head>
-        <title>Meteor</title>
-      </Head>
-      <Card isLarge isHoverable>
-        <CardBody>
-          <Form isHorizontal>
-            <FormGroup
-              label={<Brand src="/logo192.png" alt="PatternFly logo" style={{ height: '1.5em' }} />}
-              helperTextInvalid="Value must be an URL"
-              helperTextInvalidIcon={<ExclamationCircleIcon />}
-              className="label"
-              fieldId="url"
-              validated={validate()}
-            >
-              <InputGroup>
-                <TextInput
-                  type="text"
-                  value={value}
-                  validated={validate()}
-                  required={true}
-                  placeholder="https://github.com/org/repo"
-                  onChange={handleValueChange}
-                  aria-label="text input example"
-                  id="url"
-                  style={{ minWidth: '20vw', verticalAlign: 'middle' }}
-                />
-                <Button variant="primary" isLoading={isSubmitted} onClick={handleSubmit} isDisabled={pristine || validate() !== 'success'}>
-                  {(!isSubmitted && <ArrowRightIcon />) || <>Submitting</>}
-                </Button>
-              </InputGroup>
-            </FormGroup>
-          </Form>
-        </CardBody>
-      </Card>
-    </Bullseye>
-  );
-};
+const Index = () => (
+  <Layout>
+    <Head>
+      <title>Meteor</title>
+    </Head>
+    <Header>
+      <Bullseye>
+        <TextContent style={{ color: 'unset' }}>
+          <Text component={TextVariants.h1}>Meteor</Text>
+          <Text component={TextVariants.p}>Take your Jupyter Notebooks for a spin and show your impact.</Text>
+        </TextContent>
+      </Bullseye>
+    </Header>
+    <PageSection style={{ backgroundColor: 'transparent' }}>
+      <Bullseye>
+        <Form />
+      </Bullseye>
+    </PageSection>
+    <PageSection isFilled>
+      <Flex alignItems={{ default: 'alignItemsCenter' }} justifyContent={{ default: 'justifyContentCenter' }}>
+        <FlexItem style={{ maxWidth: '30%' }}>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate explicabo, distinctio eveniet quam voluptates rerum soluta assumenda
+          nihil laborum consequuntur eos magnam repellendus, maxime cum iusto illo? Maiores fugit autem ipsam ab ullam laborum, magni expedita
+          consectetur sint quas, enim mollitia libero hic! Eos, obcaecati? Sapiente corrupti pariatur et fuga.
+        </FlexItem>
+        <Divider isVertical />
+        <FlexItem style={{ maxWidth: '30%' }}>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates esse facilis a! Suscipit esse facere delectus quo pariatur autem
+          aliquid, quos dignissimos, ex fugit laborum. Dignissimos harum error ab quaerat atque non blanditiis cupiditate iusto minima sunt velit
+          praesentium illum deserunt obcaecati totam, dolores voluptatibus, porro earum voluptates odit ut? Sed molestiae amet, corrupti dolorem
+          laboriosam corporis adipisci aspernatur.
+        </FlexItem>
+      </Flex>
+    </PageSection>
+    <PageSection>
+      <Bullseye>
+        <TextContent>
+          <Title headingLevel="h6" size="md">
+            Available meteors
+          </Title>
+        </TextContent>
+      </Bullseye>
+    </PageSection>
+    <PageSection>
+      <Bullseye>
+        <Meteors />
+      </Bullseye>
+    </PageSection>
+  </Layout>
+);
 
 export default Index;

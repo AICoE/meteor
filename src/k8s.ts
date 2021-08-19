@@ -4,7 +4,8 @@ const k8s = require('@kubernetes/client-node');
 const kc = new k8s.KubeConfig();
 kc.loadFromDefault();
 
-const k8sApi = kc.makeApiClient(k8s.CustomObjectsApi);
+const k8sCustomApi = kc.makeApiClient(k8s.CustomObjectsApi);
+const k8sCoreApi = kc.makeApiClient(k8s.CoreV1Api);
 const k8sContext = kc.getCurrentContext();
 
 const k8sNamespace = (() => {
@@ -18,11 +19,11 @@ const k8sNamespace = (() => {
 const k8sMeteor: [string, string, string, string] = ['meteor.operate-first.cloud', 'v1alpha1', k8sNamespace, 'meteors'];
 
 export const listMeteors = async () => {
-  const meteors = await k8sApi.listNamespacedCustomObject(...k8sMeteor);
+  const meteors = await k8sCustomApi.listNamespacedCustomObject(...k8sMeteor);
   return meteors?.body?.items || [];
 };
 export const getMeteor = async (name: string) => {
-  const meteor = await k8sApi.getNamespacedCustomObjectStatus(...k8sMeteor, name);
+  const meteor = await k8sCustomApi.getNamespacedCustomObjectStatus(...k8sMeteor, name);
   return meteor?.body || null;
 };
 
@@ -40,6 +41,11 @@ export const createMeteor = async (spec: MeteorSpec) => {
     },
     spec,
   };
-  const meteor = await k8sApi.createNamespacedCustomObject(...k8sMeteor, body);
+  const meteor = await k8sCustomApi.createNamespacedCustomObject(...k8sMeteor, body);
   return meteor?.body || null;
+};
+
+export const getConsoleUrl = async () => {
+  const consoleResource = await k8sCoreApi.readNamespacedConfigMap('console-public', 'openshift-config-managed');
+  return consoleResource?.body.data.consoleURL || '';
 };

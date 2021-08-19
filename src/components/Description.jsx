@@ -1,54 +1,66 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  DescriptionList,
-  DescriptionListTerm,
-  DescriptionListGroup,
-  DescriptionListDescription,
-  Skeleton,
-  List,
-  ListItem,
-  ListComponent,
-  OrderType,
-} from '@patternfly/react-core';
-import { useRouter } from 'next/router';
+import { DescriptionList, DescriptionListTerm, DescriptionListGroup, DescriptionListDescription, Skeleton, Button } from '@patternfly/react-core';
+import ExternalLinkSquareAltIcon from '@patternfly/react-icons/dist/js/icons/external-link-square-alt-icon';
+import useSWR from 'swr';
 
-const Status = ({ conditions }) => (
-  <List component={ListComponent.ol} type={OrderType.number}>
-    {conditions &&
-      conditions.map((i) => (
-        <ListItem key={i.type}>
-          {i.type}: {i.status}
-        </ListItem>
-      ))}
-  </List>
-);
+import PhaseIcon from './PhaseIcon';
+import Time from './Time';
 
-Status.propTypes = {
-  conditions: PropTypes.arrayOf(
-    PropTypes.shape({
-      type: PropTypes.string,
-      status: PropTypes.string,
-    })
-  ),
+const meteorUrlInConsole = (consoleUrl, meteorMeta) =>
+  `${consoleUrl}/k8s/ns/${meteorMeta.namespace}/meteor.operate-first.cloud~v1alpha1~Meteor/${meteorMeta.name}`;
+
+const fetcher = (url) => fetch(url).then((res) => res.json());
+
+const useConsole = () => {
+  const { data, error } = useSWR('/api/console', fetcher);
+
+  return {
+    consoleUrl: data?.consoleUrl || '',
+    isLoading: !error && !data,
+    isError: error,
+  };
 };
 
 const Description = ({ order, isLoading }) => {
-  const router = useRouter();
-  const calcDuration = () => (order ? Math.floor((new Date() - new Date(order.metadata.creationTimestamp)) / 1000) : 0);
+  const { consoleUrl } = useConsole();
 
   const facts = [
-    { description: 'Name', value: !isLoading ? <a href={router.asPath}>{order.metadata.name}</a> : <Skeleton /> },
-    { description: 'UUID', value: !isLoading ? <a href={router.asPath}>{order.metadata.uid}</a> : <Skeleton /> },
     { description: 'Repository URL', value: !isLoading ? <a href={order.spec.url}>{order.spec.url}</a> : <Skeleton /> },
-    { description: 'Status', value: !isLoading && (<Status conditions={order?.status?.conditions} /> || <Skeleton />) },
-    { description: 'Elapsed time', value: !isLoading && `${calcDuration()} s` },
+    {
+      description: 'Status',
+      value: (
+        <>
+          {order?.status ? (
+            <>
+              {order.status.phase} <PhaseIcon phase={order.status.phase} />
+            </>
+          ) : (
+            'Unknown'
+          )}
+          <Button
+            style={{ float: 'right', padding: 0 }}
+            icon={<ExternalLinkSquareAltIcon />}
+            iconPosition="right"
+            component="a"
+            variant="link"
+            href={consoleUrl && order && meteorUrlInConsole(consoleUrl, order.metadata)}
+            target="_blank"
+            isSmall
+            isDisabled={!(consoleUrl && order)}
+          >
+            Show Details
+          </Button>
+        </>
+      ),
+    },
+    { description: 'Expires in', value: !isLoading && order?.status && <Time date={new Date(order.status.expirationTimestamp)} /> },
   ];
 
   return (
     <DescriptionList
       columnModifier={{
-        default: '2Col',
+        default: '1Col',
       }}
     >
       {facts.map((f) => (
@@ -65,14 +77,16 @@ Description.propTypes = {
   order: PropTypes.shape({
     metadata: PropTypes.shape({
       name: PropTypes.string.isRequired,
-      uid: PropTypes.string.isRequired,
       creationTimestamp: PropTypes.string,
     }),
     spec: PropTypes.shape({
+      ttl: PropTypes.number.isRequired,
       url: PropTypes.string.isRequired,
     }),
     status: PropTypes.shape({
       conditions: PropTypes.object,
+      phase: PropTypes.string,
+      expirationTimestamp: PropTypes.string,
     }),
   }),
 };
