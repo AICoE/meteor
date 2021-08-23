@@ -2,7 +2,6 @@ import React from 'react';
 import { Button, Card, CardBody, CardFooter, CardHeader, CardTitle, Divider, Flex, FlexItem, PageSection } from '@patternfly/react-core';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
-import useSWR from 'swr';
 
 import Description from '../../components/Description';
 import Layout from '../../components/Layout';
@@ -11,17 +10,7 @@ import ArrowLeftIcon from '@patternfly/react-icons/dist/js/icons/arrow-left-icon
 import ExternalLinkAltIcon from '@patternfly/react-icons/dist/js/icons/external-link-alt-icon';
 import Link from 'next/link';
 
-const fetcher = (uid) => uid && fetch(`/api/meteor/${uid}`).then((res) => res.json());
-
-const useOrder = (uid) => {
-  const { data, error } = useSWR(uid, fetcher, { refreshInterval: 5000 });
-
-  return {
-    order: data,
-    isLoading: !error && !data,
-    isError: error,
-  };
-};
+import { useOrder } from '../../swr';
 
 const Order = () => {
   const router = useRouter();

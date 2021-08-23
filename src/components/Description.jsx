@@ -2,25 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { DescriptionList, DescriptionListTerm, DescriptionListGroup, DescriptionListDescription, Skeleton, Button } from '@patternfly/react-core';
 import ExternalLinkSquareAltIcon from '@patternfly/react-icons/dist/js/icons/external-link-square-alt-icon';
-import useSWR from 'swr';
 
 import PhaseIcon from './PhaseIcon';
 import Time from './Time';
+import { useConsole } from '../swr';
 
 const meteorUrlInConsole = (consoleUrl, meteorMeta) =>
   `${consoleUrl}/k8s/ns/${meteorMeta.namespace}/meteor.operate-first.cloud~v1alpha1~Meteor/${meteorMeta.name}`;
-
-const fetcher = (url) => fetch(url).then((res) => res.json());
-
-const useConsole = () => {
-  const { data, error } = useSWR('/api/console', fetcher);
-
-  return {
-    consoleUrl: data?.consoleUrl || '',
-    isLoading: !error && !data,
-    isError: error,
-  };
-};
 
 const Description = ({ order, isLoading }) => {
   const { consoleUrl } = useConsole();
