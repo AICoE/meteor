@@ -1,10 +1,28 @@
 import React from 'react';
-import { Bullseye, PageSection, Flex, FlexItem, Divider, TextContent, TextVariants, Text, Title } from '@patternfly/react-core';
+import {
+  Bullseye,
+  Button,
+  PageSection,
+  Flex,
+  FlexItem,
+  Divider,
+  TextContent,
+  TextVariants,
+  Text,
+  Title,
+  TextList,
+  TextListItem,
+  TextListVariants,
+} from '@patternfly/react-core';
+import GitHubIcon from '@patternfly/react-icons/dist/js/icons/github-icon';
 import Head from 'next/head';
+import getConfig from 'next/config';
 import Form from '../components/Form';
 import Layout from '../components/Layout';
 import Header from '../components/Header';
 import Meteors from '../components/Meteors';
+
+const { publicRuntimeConfig } = getConfig();
 
 const Index = () => (
   <Layout>
@@ -25,28 +43,58 @@ const Index = () => (
       </Bullseye>
     </PageSection>
     <PageSection isFilled>
-      <Flex alignItems={{ default: 'alignItemsCenter' }} justifyContent={{ default: 'justifyContentCenter' }}>
-        <FlexItem style={{ maxWidth: '30%' }}>
-          Project Meteor is an open source technology that automates the creation of interactive environments alongside publication-quality static
-          content. It provides a single tool for users to explore and test drive services, tools, and emerging technologies for developing
-          intelligent applications. This project is being developed by members of the Red Hat's Artificial Intelligence Center of Excellence
-          (AICoE), who hope to create better visibility and impact of projects developed in the open.
-        </FlexItem>
-        <Divider isVertical />
-        <FlexItem style={{ maxWidth: '30%' }}>
-          How it works: 1) Provide a link to your GitHub repo in the form above. 2) Our bots will look for dependency files, such as Pipfiles, and
-          use this information in our pipelines to build container images of your repository. 3) Interact with your Jupyter notebooks in a live JupyterLab
-          environment, or view organized, high-quality, and easily shareable static content in a JupyterBook.
-          New to Meteor? Check out the available meteors below to explore the environment, or view the source code on <a href={"https://github.com/AICoE/meteor"}>Github</a>.
-        </FlexItem>
-      </Flex>
+      <Bullseye>
+        <Flex style={{ maxWidth: '1000px' }} alignItems={{ default: 'alignItemsCenter' }} justifyContent={{ default: 'justifyContentCenter' }}>
+          <FlexItem flex={{ default: 'flex_1' }}>
+            <TextContent>
+              <Text component={TextVariants.p}>
+                <b>Project Meteor</b> is an open source technology that automates the creation of interactive environments alongside
+                publication-quality static content.
+              </Text>
+              <Text component={TextVariants.p}>
+                It provides a single tool for users to explore and test drive services, tools, and emerging technologies for developing intelligent
+                applications. This project is being developed by members of the <span style={{ whiteSpace: 'nowrap' }}>Red Hat{"'"}s</span> Artificial
+                Intelligence Center of Excellence (AICoE), who hope to create better visibility and impact of projects developed in the open.
+              </Text>
+              <Bullseye style={{ marginTop: '2em' }}>
+                <Button component="a" href={publicRuntimeConfig.github} variant="primary" isLarge>
+                  <GitHubIcon /> GitHub
+                </Button>
+              </Bullseye>
+            </TextContent>
+          </FlexItem>
+          <Divider isVertical />
+          <FlexItem flex={{ default: 'flex_1' }}>
+            <TextContent>
+              <Text component={TextVariants.h5}>How it works:</Text>
+              <TextList component={TextListVariants.ol}>
+                <TextListItem>Provide a link to your GitHub repo in the form above.</TextListItem>
+                <TextListItem>
+                  Our bots will look for dependency files, such as Pipfiles, and use this information in our pipelines to build container images of
+                  your repository.
+                </TextListItem>
+                <TextListItem>
+                  Interact with your Jupyter notebooks in a live JupyterLab environment, or view organized, high-quality, and easily shareable static
+                  content in a JupyterBook.
+                </TextListItem>
+              </TextList>
+              <Text component={TextVariants.h5}>New to Meteor?</Text>
+              <Text component={TextVariants.p}>
+                Check out the available meteors below to explore the environment, or view the source code on{' '}
+                <Text component={TextVariants.a} href={publicRuntimeConfig.github}>
+                  GitHub
+                </Text>
+                .
+              </Text>
+            </TextContent>
+          </FlexItem>
+        </Flex>
+      </Bullseye>
     </PageSection>
     <PageSection>
       <Bullseye>
         <TextContent>
-          <Title headingLevel="h6" size="md">
-            Available meteors
-          </Title>
+          <Title headingLevel="h2">Available meteors</Title>
         </TextContent>
       </Bullseye>
     </PageSection>
