@@ -28,6 +28,7 @@ const Index = () => (
   <Layout>
     <Head>
       <title>Meteor</title>
+      <link rel="preload" href="/api/meteors" as="fetch" crossOrigin="anonymous"></link>
     </Head>
     <Header>
       <Bullseye>

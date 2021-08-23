@@ -50,6 +50,7 @@ const Description = ({ order, isLoading }) => {
       columnModifier={{
         default: '1Col',
       }}
+      style={{ minWidth: '400px' }}
     >
       {facts.map((f) => (
         <DescriptionListGroup key={f.description}>
@@ -72,7 +73,7 @@ Description.propTypes = {
       url: PropTypes.string.isRequired,
     }),
     status: PropTypes.shape({
-      conditions: PropTypes.object,
+      conditions: PropTypes.array,
       phase: PropTypes.string,
       expirationTimestamp: PropTypes.string,
     }),
