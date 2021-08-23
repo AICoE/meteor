@@ -32,6 +32,7 @@
   },
   "scripts": {
     "dev": "next dev",
+    "dev-debug": "NODE_OPTIONS='--inspect' next dev",
     "start": "next start",
     "build": "next build",
     "lint": "next lint && eslint src/**/*"

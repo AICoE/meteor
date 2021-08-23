@@ -1,22 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Flex, FlexItem, Skeleton } from '@patternfly/react-core';
-import useSWR from 'swr';
 import Link from 'next/link';
 import MeteorIcon from '@patternfly/react-icons/dist/js/icons/meteor-icon';
 import { WrappedTile } from './Wrapped';
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
-
-const useMeteors = () => {
-  const { data, error } = useSWR('/api/meteors', fetcher);
-
-  return {
-    data,
-    isLoading: !error && !data,
-    isError: error,
-  };
-};
+import { useMeteors } from '../swr';
 
 const MeteorTile = ({ name, content, isLoading }) => (
   <FlexItem style={{ margin: '1em 1em' }}>

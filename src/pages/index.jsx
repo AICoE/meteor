@@ -9,7 +9,6 @@ import {
   TextContent,
   TextVariants,
   Text,
-  Title,
   TextList,
   TextListItem,
   TextListVariants,
@@ -21,6 +20,7 @@ import Form from '../components/Form';
 import Layout from '../components/Layout';
 import Header from '../components/Header';
 import Meteors from '../components/Meteors';
+import MeteorsTitle from '../components/MeteorsTitle';
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -94,7 +94,7 @@ const Index = () => (
     <PageSection>
       <Bullseye>
         <TextContent>
-          <Title headingLevel="h2">Available meteors</Title>
+          <MeteorsTitle />
         </TextContent>
       </Bullseye>
     </PageSection>
