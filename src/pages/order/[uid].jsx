@@ -22,15 +22,14 @@ const Order = () => {
     return <Layout />;
   }
 
-  const launchButtons = [
-    { name: 'JupyterHub', href: order?.status?.jupyterHub?.url || '' },
-    { name: 'website', href: order?.status?.jupyterBook?.url ? `http://${order?.status?.jupyterBook?.url}` : '' },
-  ];
+  const launchButtons = order?.status?.pipelines || [];
 
   return (
     <Layout>
       <Head>
         <title>Meteor {order?.metadata.name}</title>
+        <link rel="preload" href="/api/console" as="fetch" crossOrigin="anonymous"></link>
+        <link rel="preload" href={`/api/meteor/${uid}`} as="fetch" crossOrigin="anonymous"></link>
       </Head>
       <div style={{ height: '200px', marginBottom: '-200px', backgroundColor: 'var(--pf-c-page__header--BackgroundColor)' }}></div>
       <PageSection style={{ backgroundColor: 'transparent' }}>
@@ -54,8 +53,8 @@ const Order = () => {
               <Divider />
               <CardFooter>
                 {launchButtons.map((b) => (
-                  <Button key={b.name} variant="link" component="a" target="_blank" href={b.href} isDisabled={!b.href}>
-                    Open as {b.name} <ExternalLinkAltIcon />
+                  <Button key={b.name} variant="link" component="a" target="_blank" href={b.url} isDisabled={b.ready !== 'True'}>
+                    Open as <span style={{ textTransform: 'capitalize' }}>{b.name}</span> <ExternalLinkAltIcon />
                   </Button>
                 ))}
               </CardFooter>
