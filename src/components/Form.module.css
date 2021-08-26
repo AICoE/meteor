@@ -1,5 +1,10 @@
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 800px) {
   .card {
-    min-width: 600px;
+    min-width: 800px;
   }
+}
+
+.branch {
+  max-width: 250px;
+  text-overflow: ellipsis;
 }

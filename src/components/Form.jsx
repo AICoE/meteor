@@ -1,20 +1,30 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import { Button, Card, CardBody, Form, FormGroup, InputGroup, TextInput } from '@patternfly/react-core';
+import { Button, Card, CardBody, Checkbox, Form, FormGroup, InputGroup, TextInput } from '@patternfly/react-core';
 import ArrowRightIcon from '@patternfly/react-icons/dist/js/icons/arrow-right-icon';
 import ExclamationCircleIcon from '@patternfly/react-icons/dist/js/icons/exclamation-circle-icon';
 
 import styles from './Form.module.css';
+import { PIPELINES } from '../constants';
+import BranchDropdown from './BranchDropdown';
 
 const MeteorForm = () => {
-  const [value, setValue] = useState('');
+  const [url, setUrl] = useState('');
+  const [ref, setRef] = useState('HEAD');
+  const [pipelines, setPipelines] = useState(PIPELINES);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [pristine, setPristine] = useState(true);
   const router = useRouter();
 
-  const handleValueChange = (v) => {
-    setValue(v);
+  const handleUrlChange = (v) => {
+    setUrl(v);
     setPristine(false);
+  };
+
+  const handlePipelineCheck = (_, { target }) => {
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+    setPipelines({ ...pipelines, [name]: { ...pipelines[name], value } });
   };
 
   const handleSubmit = async (event) => {
@@ -30,7 +40,13 @@ const MeteorForm = () => {
         'Content-Type': 'application/json',
         Accept: 'application/json',
       }),
-      body: JSON.stringify({ url: value, ref: 'HEAD' }),
+      body: JSON.stringify({
+        url,
+        ref,
+        pipelines: Object.entries(pipelines)
+          .filter(([, v]) => v.value)
+          .map(([k]) => k),
+      }),
     });
 
     const body = await response.json();
@@ -38,37 +54,50 @@ const MeteorForm = () => {
   };
 
   const validate = () => {
-    if (value) {
-      return value.match(/https?:\/\/.*/g) ? 'success' : 'error';
+    if (url) {
+      return url.match(/https?:\/\/.*/g) ? 'success' : 'error';
     } else {
       return pristine ? 'default' : 'error';
     }
   };
 
   return (
-    <Card isHoverable className={styles.card}>
-      <CardBody>
-        <Form onSubmit={handleSubmit}>
-          <FormGroup helperTextInvalid="Value must be an URL" helperTextInvalidIcon={<ExclamationCircleIcon />} fieldId="url" validated={validate()}>
-            <InputGroup>
-              <TextInput
-                type="text"
-                value={value}
-                validated={validate()}
-                required={true}
-                placeholder="https://github.com/org/repo"
-                onChange={handleValueChange}
-                aria-label="repository url"
-                id="url"
-              />
-              <Button variant="primary" type="submit" isLoading={isSubmitted} isDisabled={pristine || validate() !== 'success'}>
-                {(!isSubmitted && <ArrowRightIcon />) || <>Submitting</>}
-              </Button>
-            </InputGroup>
-          </FormGroup>
-        </Form>
-      </CardBody>
-    </Card>
+    <div className={styles.wrap}>
+      <Card isHoverable className={styles.card}>
+        <CardBody>
+          <Form onSubmit={handleSubmit}>
+            <FormGroup
+              helperTextInvalid="Value must be an URL"
+              helperTextInvalidIcon={<ExclamationCircleIcon />}
+              fieldId="url"
+              validated={validate()}
+            >
+              <InputGroup>
+                <TextInput
+                  type="text"
+                  value={url}
+                  validated={validate()}
+                  required={true}
+                  placeholder="https://github.com/org/repo"
+                  onChange={handleUrlChange}
+                  aria-label="repository url"
+                  id="url"
+                />
+                <BranchDropdown className={styles.branch} repoUrl={url} onSelect={setRef} />
+                <Button variant="primary" type="submit" isLoading={isSubmitted} isDisabled={pristine || validate() !== 'success'}>
+                  {(!isSubmitted && <ArrowRightIcon />) || <>Submitting</>}
+                </Button>
+              </InputGroup>
+            </FormGroup>
+            <FormGroup isInline className={styles.test} label="Components">
+              {Object.entries(pipelines).map(([k, v]) => (
+                <Checkbox key={k} id={k} label={v.label} name={k} isChecked={v.value} onChange={handlePipelineCheck} />
+              ))}
+            </FormGroup>
+          </Form>
+        </CardBody>
+      </Card>
+    </div>
   );
 };
 

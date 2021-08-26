@@ -43,7 +43,9 @@ const Meteors = () => {
   return (
     <Flex justifyContent={{ default: 'justifyContentCenter' }}>
       {meteors
-        ? meteors.map((m) => <MeteorTile key={m.metadata.uid} name={m.metadata.name} content={m.spec.url} phase={m.status.phase} />)
+        ? meteors.map((m) => (
+            <MeteorTile key={m.metadata.uid} name={m.metadata.name} content={`${m.spec.url}@${m.spec.ref}`} phase={m.status.phase} />
+          ))
         : [...Array(5)].map((_, i) => <MeteorTile key={`skeleton-${i}`} isLoading />)}
     </Flex>
   );

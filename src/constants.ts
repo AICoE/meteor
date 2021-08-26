@@ -6,3 +6,14 @@ export enum HttpStatusCode {
 }
 
 export const GA_TRACKING_ID = process.env.GA_TRACKING_ID;
+
+export const PIPELINES = {
+  jupyterhub: {
+    label: 'JupyterHub',
+    value: true,
+  },
+  jupyterbook: {
+    label: 'Website',
+    value: true,
+  },
+};
