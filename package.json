@@ -6,7 +6,7 @@
     "@kubernetes/client-node": "^0.15.1",
     "@patternfly/patternfly": "^4.125.3",
     "@patternfly/react-core": "^4.147.0",
-    "@patternfly/react-log-viewer": "^4.4.0",
+    "@patternfly/react-log-viewer": "^4.5.4",
     "next": "^11.1.0",
     "next-transpile-modules": "^8.0.0",
     "prom-client": "^13.2.0",
