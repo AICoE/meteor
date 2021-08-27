@@ -15,6 +15,7 @@ const Description = ({ order, isLoading }) => {
 
   const facts = [
     { description: 'Repository URL', value: !isLoading ? <a href={order.spec.url}>{order.spec.url}</a> : <Skeleton /> },
+    { description: 'Branch', value: !isLoading ? <>{order.spec.ref}</> : <Skeleton /> },
     {
       description: 'Status',
       value: (
@@ -71,6 +72,7 @@ Description.propTypes = {
     spec: PropTypes.shape({
       ttl: PropTypes.number.isRequired,
       url: PropTypes.string.isRequired,
+      ref: PropTypes.string.isRequired,
     }),
     status: PropTypes.shape({
       conditions: PropTypes.array,

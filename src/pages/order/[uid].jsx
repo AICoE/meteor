@@ -11,6 +11,7 @@ import ExternalLinkAltIcon from '@patternfly/react-icons/dist/js/icons/external-
 import Link from 'next/link';
 
 import { useOrder } from '../../swr';
+import { PIPELINES } from '../../constants';
 
 const Order = () => {
   const router = useRouter();
@@ -22,7 +23,7 @@ const Order = () => {
     return <Layout />;
   }
 
-  const launchButtons = order?.status?.pipelines || [];
+  const launchButtons = order?.status?.pipelines.map((p) => ({ ...p, label: PIPELINES[p.name]?.label || p.name })) || [];
 
   return (
     <Layout>
@@ -54,7 +55,7 @@ const Order = () => {
               <CardFooter>
                 {launchButtons.map((b) => (
                   <Button key={b.name} variant="link" component="a" target="_blank" href={b.url} isDisabled={b.ready !== 'True'}>
-                    Open as <span style={{ textTransform: 'capitalize' }}>{b.name}</span> <ExternalLinkAltIcon />
+                    Open as {b.label} <ExternalLinkAltIcon />
                   </Button>
                 ))}
               </CardFooter>

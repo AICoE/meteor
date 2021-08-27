@@ -35,7 +35,7 @@
     "dev-debug": "NODE_OPTIONS='--inspect' next dev",
     "start": "next start",
     "build": "next build",
-    "lint": "next lint && eslint src/**/*"
+    "lint": "next lint && eslint \"src/**/*\""
   },
   "eslintConfig": {
     "root": true,
@@ -48,7 +48,8 @@
       "sourceType": "module"
     },
     "plugins": [
-      "prettier"
+      "prettier",
+      "@typescript-eslint"
     ],
     "extends": [
       "eslint:recommended",
@@ -57,7 +58,8 @@
       "plugin:react/recommended"
     ],
     "env": {
-      "browser": true
+      "browser": true,
+      "node": true
     },
     "settings": {
       "import/resolver": {
@@ -73,6 +75,10 @@
       "react": {
         "version": "detect"
       }
+    },
+    "rules": {
+      "no-unused-vars": "off",
+      "@typescript-eslint/no-unused-vars": "error"
     }
   },
   "prettier": {
