@@ -23,7 +23,7 @@ const Order = () => {
     return <Layout />;
   }
 
-  const launchButtons = order?.status?.pipelines.map((p) => ({ ...p, label: PIPELINES[p.name]?.label || p.name })) || [];
+  const launchButtons = (order?.status?.pipelines || []).map((p) => ({ ...p, label: PIPELINES[p.name]?.label || p.name }));
 
   return (
     <Layout>
