@@ -2,6 +2,8 @@ apiVersion: v1
 kind: Service
 metadata:
     name: meteor-shower
+    labels:
+        app: meteor-shower
 spec:
     selector:
         app: meteor-shower
