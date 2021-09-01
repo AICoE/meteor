@@ -8,6 +8,7 @@ resources:
 - route.yaml
 - service.yaml
 - serviceaccount.yaml
+- servicemonitor.yaml
 images:
 - name: meteor-shower
   newName: quay.io/tcoufal/meteor-shower
