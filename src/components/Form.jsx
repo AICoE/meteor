@@ -41,7 +41,7 @@ const MeteorForm = () => {
         Accept: 'application/json',
       }),
       body: JSON.stringify({
-        url,
+        url: url.replace(/\.git$/g, ''),
         ref,
         pipelines: Object.entries(pipelines)
           .filter(([, v]) => v.value)
