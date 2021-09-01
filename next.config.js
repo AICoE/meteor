@@ -4,7 +4,7 @@ const withTM = require('next-transpile-modules')(['@patternfly/react-core', '@pa
 
 // Default metrics needs to be registered only once and at the startup
 const client = require('prom-client');
-client.collectDefaultMetrics();
+client.collectDefaultMetrics({ prefix: 'meteor_shower_' });
 
 module.exports = withTM({
   // Handle `/metrics` calls as if it is a call to `/api/metrics`
