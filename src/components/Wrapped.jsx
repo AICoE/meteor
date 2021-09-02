@@ -1,5 +1,5 @@
 import React from 'react';
-import { Brand, Tile } from '@patternfly/react-core';
+import { Brand } from '@patternfly/react-core';
 
 const wrapWithRef = (Component, Wrapper = 'div') => {
   const newComponent = React.forwardRef((props, ref) => (
@@ -11,5 +11,4 @@ const wrapWithRef = (Component, Wrapper = 'div') => {
   return newComponent;
 };
 
-export const WrappedTile = wrapWithRef(Tile);
 export const WrappedBrand = wrapWithRef(Brand, 'a');
