@@ -1,7 +1,7 @@
-# Refactor all Build and Deployment Pipelines into external component 
+# Refactor all Build and Deployment Pipelines into external component
 
 * Status: accepted
-* Deciders: 
+* Deciders:
 * Date: 2021-09-15
 
 ## Context and Problem Statement
@@ -22,7 +22,7 @@ a separation of these is advised.
 1. Tekton YAML as port of meteor-operator
 2. Tekton YAML as a seperate Helm application
 3. Tekton YAML as a seperate GitHub with Kustomize manifests
-4. Tekton YAML as a seperate Tekton Bundle 
+4. Tekton YAML as a seperate Tekton Bundle
 
 ## Decision Outcome
 
@@ -32,10 +32,10 @@ deploy these components to many different deployments, including customer depoly
 ### Positive Consequences
 
 * Tekton YAML can be developed and distributed independently of Meteor builder.
-* Python Module Build/Delivery Pipelines can be deployed independently of Meteor builder. 
+* Python Module Build/Delivery Pipelines can be deployed independently of Meteor builder.
 * all build/deliver/deploy related components are maintained in one place
 
 ### Negative Consequences
 
 * a stable interface between two projects need to be maintained
-* ArgoCD needs to deploy Helm 
+* ArgoCD needs to deploy Helm
