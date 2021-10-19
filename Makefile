@@ -15,7 +15,7 @@ IMG ?= $(IMAGE_TAG_BASE):v$(VERSION)
 
 docker-build: ## Build docker image with the manager.
 	$(eval UUID := $(shell uuidgen))
-	s2i build . registry.access.redhat.com/ubi8/nodejs-14 --copy --as-dockerfile /tmp/${UUID}/Dockerfile
+	s2i build . registry.access.redhat.com/ubi8/nodejs-14 --as-dockerfile /tmp/${UUID}/Dockerfile
 	cd /tmp/${UUID} && docker build -t ${IMG} .
 
 docker-push: ## Push docker image with the manager.
