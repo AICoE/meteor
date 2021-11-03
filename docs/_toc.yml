@@ -1,0 +1,6 @@
+format: jb-book
+root: README
+parts:
+  - caption: Title of Chapters
+    chapters:
+    - file: path/to/file
