@@ -23,7 +23,7 @@ import {
 } from '@patternfly/react-core';
 import Link from 'next/link';
 
-import { useMeteors, prefetch } from '../swr';
+import { useMeteors, prefetch } from '../hooks/swr';
 import PhaseIcon from './PhaseIcon';
 import ExternalLinkAltIcon from '@patternfly/react-icons/dist/js/icons/external-link-alt-icon';
 import MeteorIcon from '@patternfly/react-icons/dist/js/icons/meteor-icon';

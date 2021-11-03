@@ -10,7 +10,7 @@ import ArrowLeftIcon from '@patternfly/react-icons/dist/js/icons/arrow-left-icon
 import ExternalLinkAltIcon from '@patternfly/react-icons/dist/js/icons/external-link-alt-icon';
 import Link from 'next/link';
 
-import { useOrder } from '../../swr';
+import { useOrder } from '../../hooks/swr';
 import { PIPELINES } from '../../constants';
 
 const Order = () => {

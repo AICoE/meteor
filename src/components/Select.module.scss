@@ -1,0 +1,8 @@
+.select {
+  display: inline-block;
+  max-width: 200px;
+  vertical-align: 5px;
+  :global(.pf-c-select__menu) {
+    width: 400px;
+  }
+}
