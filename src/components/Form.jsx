@@ -1,31 +1,33 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import { Button, Card, CardBody, Checkbox, Form, FormGroup, InputGroup, TextInput } from '@patternfly/react-core';
+import { Button, Card, CardBody, Form, FormGroup, InputGroup, TextInput, Flex, FlexItem } from '@patternfly/react-core';
 import ArrowRightIcon from '@patternfly/react-icons/dist/js/icons/arrow-right-icon';
 import ExclamationCircleIcon from '@patternfly/react-icons/dist/js/icons/exclamation-circle-icon';
 
 import styles from './Form.module.css';
-import { PIPELINES } from '../constants';
+import { PIPELINES, TTL_OPTIONS, DEFAULT_TTL_OPTION } from '../constants';
 import BranchDropdown from './BranchDropdown';
 import { getMeteorsFromLocalStorage, setMeteorsToLocalStorage } from '../localstorage';
+import Dropdown from './Dropdown';
+import Select from './Select';
+import { useBranches } from '../hooks/swr';
+import { useAlerts } from '../contexts/Alerts';
 
 const MeteorForm = () => {
   const [url, setUrl] = useState('');
   const [ref, setRef] = useState('HEAD');
-  const [pipelines, setPipelines] = useState(PIPELINES);
+  const [ttl, setTtl] = useState(null);
+  const [pipelines, setPipelines] = useState([]);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [pristine, setPristine] = useState(true);
   const router = useRouter();
+  const { isError: repoFetchError } = useBranches(url);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, addAlert] = useAlerts();
 
   const handleUrlChange = (v) => {
     setUrl(v);
     setPristine(false);
-  };
-
-  const handlePipelineCheck = (_, { target }) => {
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
-    setPipelines({ ...pipelines, [name]: { ...pipelines[name], value } });
   };
 
   const handleSubmit = async (event) => {
@@ -35,29 +37,37 @@ const MeteorForm = () => {
     setIsSubmitted(true);
     event.preventDefault();
 
-    const response = await fetch('/api/meteors', {
-      method: 'POST',
-      headers: new Headers({
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      }),
-      body: JSON.stringify({
-        url: url.replace(/\.git$/g, ''),
-        ref,
-        pipelines: Object.entries(pipelines)
-          .filter(([, v]) => v.value)
-          .map(([k]) => k),
-      }),
-    });
+    try {
+      const response = await fetch('/api/meteors', {
+        method: 'POST',
+        headers: new Headers({
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        }),
+        body: JSON.stringify({
+          url: url.replace(/\.git$/g, ''),
+          ref,
+          pipelines: pipelines.map((p) => p.value),
+          ttl,
+        }),
+      });
 
-    const body = await response.json();
-    setMeteorsToLocalStorage([...getMeteorsFromLocalStorage(), body.metadata.name]);
-    router.push(`/order/${body.metadata.name}`);
+      const body = await response.json();
+      if (!response.ok) {
+        throw new Error(body.message, { cause: body });
+      }
+      setMeteorsToLocalStorage([...getMeteorsFromLocalStorage(), body.metadata.name]);
+      router.push(`/order/${body.metadata.name}`);
+    } catch (error) {
+      setIsSubmitted(false);
+      console.error(error);
+      addAlert({ variant: 'danger', title: error.cause.message });
+    }
   };
 
   const validate = () => {
     if (url) {
-      return url.match(/https?:\/\/.*/g) ? 'success' : 'error';
+      return url.match(/https?:\/\/.*/g) && !repoFetchError ? 'success' : 'error';
     } else {
       return pristine ? 'default' : 'error';
     }
@@ -65,11 +75,11 @@ const MeteorForm = () => {
 
   return (
     <div className={styles.wrap}>
-      <Card isHoverable className={styles.card}>
+      <Card className={styles.card}>
         <CardBody>
           <Form onSubmit={handleSubmit}>
             <FormGroup
-              helperTextInvalid="Value must be an URL"
+              helperTextInvalid="Value must be a valid repository URL"
               helperTextInvalidIcon={<ExclamationCircleIcon />}
               fieldId="url"
               validated={validate()}
@@ -85,17 +95,39 @@ const MeteorForm = () => {
                   aria-label="repository url"
                   id="url"
                 />
-                <BranchDropdown className={styles.branch} repoUrl={url} onSelect={setRef} />
                 <Button variant="primary" type="submit" isLoading={isSubmitted} isDisabled={pristine || validate() !== 'success'}>
                   {(!isSubmitted && <ArrowRightIcon />) || <>Submitting</>}
                 </Button>
               </InputGroup>
             </FormGroup>
-            <FormGroup isInline className={styles.test} label="Components">
-              {Object.entries(pipelines).map(([k, v]) => (
-                <Checkbox key={k} id={k} label={v.label} name={k} isChecked={v.value} onChange={handlePipelineCheck} />
-              ))}
-            </FormGroup>
+            {!pristine && (
+              <Flex>
+                <FlexItem>
+                  <label className={styles.label} htmlFor="branch">
+                    Branch
+                  </label>
+                  <BranchDropdown id="branch" className={styles.dropdown} repoUrl={url} onSelect={setRef} />
+                </FlexItem>
+                <FlexItem>
+                  <label className={styles.label} htmlFor="ttl">
+                    Expiration
+                  </label>
+                  <Dropdown
+                    id="ttl"
+                    className={styles.dropdown}
+                    initialValue={DEFAULT_TTL_OPTION}
+                    dropdownItems={Object.keys(TTL_OPTIONS)}
+                    onSelect={setTtl}
+                  />
+                </FlexItem>
+                <FlexItem grow={{ default: 'grow' }}>
+                  <label className={styles.label} htmlFor="pipelines">
+                    Components
+                  </label>
+                  <Select onSelect={setPipelines} id="pipelines" options={PIPELINES} />
+                </FlexItem>
+              </Flex>
+            )}
           </Form>
         </CardBody>
       </Card>

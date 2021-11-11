@@ -58,7 +58,7 @@ const Index = () => (
                 Intelligence Center of Excellence (AICoE), who hope to create better visibility and impact of projects developed in the open.
               </Text>
               <Bullseye style={{ marginTop: '2em' }}>
-                <Button component="a" href={publicRuntimeConfig.github} variant="primary" isLarge>
+                <Button component="a" href={publicRuntimeConfig.github} variant="secondary" isLarge>
                   <GitHubIcon /> GitHub
                 </Button>
               </Bullseye>

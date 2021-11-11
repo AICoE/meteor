@@ -23,7 +23,7 @@ import {
 } from '@patternfly/react-core';
 import Link from 'next/link';
 
-import { useMeteors, prefetch } from '../swr';
+import { useMeteors, prefetch } from '../hooks/swr';
 import PhaseIcon from './PhaseIcon';
 import ExternalLinkAltIcon from '@patternfly/react-icons/dist/js/icons/external-link-alt-icon';
 import MeteorIcon from '@patternfly/react-icons/dist/js/icons/meteor-icon';
@@ -102,11 +102,13 @@ MeteorTile.propTypes = {
 
 const Meteors = () => {
   const { data: meteors, isLoading } = useMeteors();
-  const [localMeteors, setLocalMeteors] = useState([]);
+  const [localMeteors, setLocalMeteors] = useState(null);
   const [toggle, setToggle] = useState(true);
 
   useEffect(() => {
-    setMeteorsToLocalStorage(localMeteors);
+    if (localMeteors !== null) {
+      setMeteorsToLocalStorage(localMeteors);
+    }
   }, [localMeteors]);
 
   useEffect(() => {
@@ -123,7 +125,7 @@ const Meteors = () => {
     </EmptyState>
   );
 
-  const meteorsToDisplay = (meteors || []).filter((m) => (toggle ? localMeteors.includes(m.metadata.name) : true));
+  const meteorsToDisplay = (meteors || []).filter((m) => (toggle ? localMeteors?.includes(m.metadata.name) : true));
 
   return (
     <Flex direction={{ default: 'column' }}>

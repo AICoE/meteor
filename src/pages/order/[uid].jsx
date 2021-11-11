@@ -10,7 +10,7 @@ import ArrowLeftIcon from '@patternfly/react-icons/dist/js/icons/arrow-left-icon
 import ExternalLinkAltIcon from '@patternfly/react-icons/dist/js/icons/external-link-alt-icon';
 import Link from 'next/link';
 
-import { useOrder } from '../../swr';
+import { useOrder } from '../../hooks/swr';
 import { PIPELINES } from '../../constants';
 
 const Order = () => {
@@ -33,7 +33,7 @@ const Order = () => {
         <link rel="preload" href={`/api/meteor/${uid}`} as="fetch" crossOrigin="anonymous"></link>
       </Head>
       <div style={{ height: '200px', marginBottom: '-200px', backgroundColor: 'var(--pf-c-page__header--BackgroundColor)' }}></div>
-      <PageSection style={{ backgroundColor: 'transparent' }}>
+      <PageSection style={{ backgroundColor: 'transparent' }} isFilled>
         <Flex alignItems={{ default: 'alignItemsFlexStart' }} justifyContent={{ default: 'justifyContentCenter' }}>
           <FlexItem>
             <Card>

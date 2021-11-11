@@ -5,7 +5,7 @@ import ExternalLinkSquareAltIcon from '@patternfly/react-icons/dist/js/icons/ext
 
 import PhaseIcon from './PhaseIcon';
 import Time from './Time';
-import { useConsole } from '../swr';
+import { useConsole } from '../hooks/swr';
 
 const meteorUrlInConsole = (consoleUrl, meteorMeta) =>
   `${consoleUrl}/k8s/ns/${meteorMeta.namespace}/meteor.operate-first.cloud~v1alpha1~Meteor/${meteorMeta.name}`;
