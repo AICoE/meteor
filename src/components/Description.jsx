@@ -7,8 +7,7 @@ import PhaseIcon from './PhaseIcon';
 import Time from './Time';
 import { useConsole } from '../hooks/swr';
 
-const meteorUrlInConsole = (consoleUrl, meteorMeta) =>
-  `${consoleUrl}/k8s/ns/${meteorMeta.namespace}/meteor.operate-first.cloud~v1alpha1~Meteor/${meteorMeta.name}`;
+const meteorUrlInConsole = (consoleUrl, meteorMeta) => `${consoleUrl}/k8s/ns/${meteorMeta.namespace}/meteor.zone~v1alpha1~Meteor/${meteorMeta.name}`;
 
 const Description = ({ order, isLoading }) => {
   const { consoleUrl } = useConsole();
