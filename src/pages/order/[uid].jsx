@@ -33,7 +33,7 @@ const Order = () => {
         <link rel="preload" href={`/api/meteor/${uid}`} as="fetch" crossOrigin="anonymous"></link>
       </Head>
       <div style={{ height: '200px', marginBottom: '-200px', backgroundColor: 'var(--pf-c-page__header--BackgroundColor)' }}></div>
-      <PageSection style={{ backgroundColor: 'transparent' }}>
+      <PageSection style={{ backgroundColor: 'transparent' }} isFilled>
         <Flex alignItems={{ default: 'alignItemsFlexStart' }} justifyContent={{ default: 'justifyContentCenter' }}>
           <FlexItem>
             <Card>

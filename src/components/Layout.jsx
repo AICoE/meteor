@@ -7,6 +7,8 @@ import { WrappedBrand } from './Wrapped';
 import Footer from './Footer';
 import GitHubIcon from '@patternfly/react-icons/dist/js/icons/github-icon';
 import SlackIcon from '@patternfly/react-icons/dist/js/icons/slack-icon';
+import { AlertsProvider } from '../contexts/Alerts';
+import Alerts from './Alerts';
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -25,29 +27,32 @@ const Layout = ({ children }) => {
   ];
 
   return (
-    <Page
-      header={
-        <PageHeader
-          logo={<WrappedBrand src="/logo192.png" alt="Meteor logo" style={{ height: '1.5em' }} />}
-          logoProps={{ href: '/' }}
-          logoComponent={Link}
-          headerTools={
-            <PageHeaderTools>
-              {headerTools.map((t) => (
-                <PageHeaderToolsItem key={t.href}>
-                  <Button variant="plain" component="a" href={t.href} target="top" aria-label={t.ariaLabel}>
-                    {t.icon}
-                  </Button>
-                </PageHeaderToolsItem>
-              ))}
-            </PageHeaderTools>
-          }
-        />
-      }
-    >
-      {children}
-      <Footer />
-    </Page>
+    <AlertsProvider>
+      <Page
+        header={
+          <PageHeader
+            logo={<WrappedBrand src="/logo192.png" alt="Meteor logo" style={{ height: '1.5em' }} />}
+            logoProps={{ href: '/' }}
+            logoComponent={Link}
+            headerTools={
+              <PageHeaderTools>
+                {headerTools.map((t) => (
+                  <PageHeaderToolsItem key={t.href}>
+                    <Button variant="plain" component="a" href={t.href} target="top" aria-label={t.ariaLabel}>
+                      {t.icon}
+                    </Button>
+                  </PageHeaderToolsItem>
+                ))}
+              </PageHeaderTools>
+            }
+          />
+        }
+      >
+        {children}
+        <Footer />
+      </Page>
+      <Alerts />
+    </AlertsProvider>
   );
 };
 

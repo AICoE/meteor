@@ -11,6 +11,7 @@ import { getMeteorsFromLocalStorage, setMeteorsToLocalStorage } from '../localst
 import Dropdown from './Dropdown';
 import Select from './Select';
 import { useBranches } from '../hooks/swr';
+import { useAlerts } from '../contexts/Alerts';
 
 const MeteorForm = () => {
   const [url, setUrl] = useState('');
@@ -21,6 +22,8 @@ const MeteorForm = () => {
   const [pristine, setPristine] = useState(true);
   const router = useRouter();
   const { isError: repoFetchError } = useBranches(url);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, addAlert] = useAlerts();
 
   const handleUrlChange = (v) => {
     setUrl(v);
@@ -34,23 +37,32 @@ const MeteorForm = () => {
     setIsSubmitted(true);
     event.preventDefault();
 
-    const response = await fetch('/api/meteors', {
-      method: 'POST',
-      headers: new Headers({
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      }),
-      body: JSON.stringify({
-        url: url.replace(/\.git$/g, ''),
-        ref,
-        pipelines: pipelines.map((p) => p.value),
-        ttl,
-      }),
-    });
+    try {
+      const response = await fetch('/api/meteors', {
+        method: 'POST',
+        headers: new Headers({
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        }),
+        body: JSON.stringify({
+          url: url.replace(/\.git$/g, ''),
+          ref,
+          pipelines: pipelines.map((p) => p.value),
+          ttl,
+        }),
+      });
 
-    const body = await response.json();
-    setMeteorsToLocalStorage([...getMeteorsFromLocalStorage(), body.metadata.name]);
-    router.push(`/order/${body.metadata.name}`);
+      const body = await response.json();
+      if (!response.ok) {
+        throw new Error(body.message, { cause: body });
+      }
+      setMeteorsToLocalStorage([...getMeteorsFromLocalStorage(), body.metadata.name]);
+      router.push(`/order/${body.metadata.name}`);
+    } catch (error) {
+      setIsSubmitted(false);
+      console.error(error);
+      addAlert({ variant: 'danger', title: error.cause.message });
+    }
   };
 
   const validate = () => {
