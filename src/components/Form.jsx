@@ -7,6 +7,7 @@ import ExclamationCircleIcon from '@patternfly/react-icons/dist/js/icons/exclama
 import styles from './Form.module.css';
 import { PIPELINES } from '../constants';
 import BranchDropdown from './BranchDropdown';
+import { getMeteorsFromLocalStorage, setMeteorsToLocalStorage } from '../localstorage';
 
 const MeteorForm = () => {
   const [url, setUrl] = useState('');
@@ -50,6 +51,7 @@ const MeteorForm = () => {
     });
 
     const body = await response.json();
+    setMeteorsToLocalStorage([...getMeteorsFromLocalStorage(), body.metadata.name]);
     router.push(`/order/${body.metadata.name}`);
   };
 

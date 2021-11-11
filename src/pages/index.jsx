@@ -20,7 +20,7 @@ import Form from '../components/Form';
 import Layout from '../components/Layout';
 import Header from '../components/Header';
 import Meteors from '../components/Meteors';
-import MeteorsTitle from '../components/MeteorsTitle';
+import Container from '../components/Container';
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -92,17 +92,10 @@ const Index = () => (
         </Flex>
       </Bullseye>
     </PageSection>
-    <PageSection>
-      <Bullseye>
-        <TextContent>
-          <MeteorsTitle />
-        </TextContent>
-      </Bullseye>
-    </PageSection>
-    <PageSection>
-      <Bullseye>
+    <PageSection variant="light">
+      <Container>
         <Meteors />
-      </Bullseye>
+      </Container>
     </PageSection>
   </Layout>
 );
