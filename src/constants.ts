@@ -17,3 +17,5 @@ export const PIPELINES = {
     value: true,
   },
 };
+
+export const LOCAL_STORAGE_METEORS_KEY = 'meteors';
