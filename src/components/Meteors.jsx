@@ -33,7 +33,7 @@ import { setMeteorsToLocalStorage, getMeteorsFromLocalStorage } from '../localst
 
 const MeteorTile = ({ name, content, isLoading, phase, pipelines, localMeteors, setLocalMeteors }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const launchButtons = (pipelines || []).map((p) => ({ ...p, label: PIPELINES[p.name]?.label || p.name }));
+  const launchButtons = (pipelines || []).map((p) => ({ ...p, label: PIPELINES.filter((c) => c.value === p.name)[0]?.label || p.name }));
 
   const handleToggleLocalMeteors = () => {
     if (localMeteors.includes(name)) {
