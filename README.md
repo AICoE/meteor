@@ -1,42 +1,54 @@
 # Project Meteor
 
+Available at: https://shower.meteor.zone
+
 Similar to how a *meteoroid* enters the atmosphere, becomes visible as a *meteor* and finally hits the Earth's surface as a *meteorite*, with this initiative we aim to create better visibility and impact of the tools, processes and expertise developed by the AICoE through project *Meteor*.
 
 This project is being driven by members of the Artificial Intelligence Center of Excellence (AICoE), part of Red Hat's Office of the CTO. This team is focused on applying AI to Red Hat's core business and services through open source development that enables user's needs and fosters open collaboration in the data science and machine learning space.
 
 Project Meteor is a combined effort across the AICoE to provide a single tool for data scientists and other users where they can interact with, explore and leverage all of our services, tools and technologies for developing intelligent applications.
 
-## Proof of concept
+## Installation
 
-The first application is an interactive [AIDevSecOps tutorial](https://github.com/AICoE/elyra-aidevsecops-tutorial) and web application that is rendered as both a static [JupyterBook](https://jupyterbook.org/) and an interactive Jupyter Lab environment. The user adds the git repository of the tutorial to a webinterface which triggers the build and deployment pipelines in the background.
+### Prerequisites
 
-The entire project workflow is shown below:
+* OpenShift Pipelines
+* OpenShift 4.7+
 
-![Project Workflow](/docs/images/project-flowchart.png)
+### Steps
 
-All is build on the infrastructure and services provided by the [Operate First Community Cloud](https://www.operate-first.cloud/).
+Meteor can be installed as an Operator to any OpenShift cluster.
 
-### AIDevSecOps Tutorial
+Since we're still in early stages of development, we require users to deploy a custom Operator Catalog to allow faster iterations. In future the Meteor operator will be included as a Community Operator to standard OpenShift operator catalog.
 
-The tutorial is used to discuss the interface between Data Science and DevOps using project templates, pipelines and bots. Moreover, it highlights that data scientists are not so different from developers, and DevSecOps practices and tools can (and should) be applied to MLOps.
+1. Deploy CatalogSource
 
-The demo application used in this tutorial is the "hello world" for AI: MNIST Classification. The ML application developed itself is not the main focus of the product, but its the various services, workflows, and pipeline integrations supported by the product that we would like to highlight and provide for our users.
+   ```sh
+   oc apply -f https://raw.githubusercontent.com/AICoE/meteor-operator/main/config/olm/catalogsource.yaml
+   ```
 
-## Project Workstreams
+2. Subscribe to the Operator. This can be done either via UI - OpenShift web console under Administrator perspective -> Operators -> Operator Hub -> search for "Meteor" and click Install or manually via CLI:
 
-In order to support the goals of Project Meteor, we have created 3 workstreams to efficiently manage and focus on the different aspects of the project. The workstreams are as follows:
+   ```sh
+   oc new-project aicoe-meteor
+   oc apply -f https://raw.githubusercontent.com/AICoE/meteor-operator/main/config/olm/operatorgroup.yaml
+   oc apply -f https://raw.githubusercontent.com/AICoE/meteor-operator/main/config/olm/subscription.yaml
+   ```
 
-### Team Comet
+3. Deploy Meteor Shower
 
-Team Comet focuses on the technical planning and implementation of the tool. Their main responsibilities include designing the technical roadmap/design of the tool, implementing the backend CI/build pipelines for deploying the web application and maintaining the application.
+   ```sh
+   kustomize build github.com/AICoE/meteor/manifests | oc apply -f -
+   ```
 
-### Team Shooting Star
+4. Deploy pipelines provided by Project Meteor and Meteor auxillary deployments
 
-Team Shooting Star focuses on polishing the tutorial and project content, as well as other AICoE tutorials and workshops to be well adopted into the tool. Team members will work on improving the interactive tutorials both in terms of the content and the user experience from a data scientist perspective.
+   ```sh
+   kustomize build github.com/AICoE/meteor-operator/config/pipelines | oc apply -f -
+   kustomize build github.com/AICoE/meteor-operator/config/pushgateway | oc apply -f -
+   ```
 
-### Team Telescope
-
-Team Telescope focuses on measuring the overall impact of the tool by implementing well defined metrics and dashboards. Team members will work with both developers and users to assess the tool, utilizing data and user feedback to suggest improvements.
+All steps are subject to change in future updates. We aim to bake in steps 3 and 4 into the operator itself to provide a single click deployment scheme.
 
 ## Community
 
