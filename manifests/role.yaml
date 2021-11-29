@@ -4,21 +4,21 @@ kind: Role
 metadata:
   name: meteor-shower
 rules:
-- apiGroups:
-  - meteor.operate-first.cloud
-  resources:
-  - meteors
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - meteor.operate-first.cloud
-  resources:
-  - meteors/status
-  verbs:
-  - get
+  - apiGroups:
+      - meteor.zone
+    resources:
+      - meteors
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - meteor.zone
+    resources:
+      - meteors/status
+    verbs:
+      - get

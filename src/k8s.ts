@@ -16,7 +16,7 @@ const k8sNamespace = (() => {
   }
 })();
 
-const k8sMeteor: [string, string, string, string] = ['meteor.operate-first.cloud', 'v1alpha1', k8sNamespace, 'meteors'];
+const k8sMeteor: [string, string, string, string] = ['meteor.zone', 'v1alpha1', k8sNamespace, 'meteors'];
 
 export const listMeteors = async () => {
   const meteors = await k8sCustomApi.listNamespacedCustomObject(...k8sMeteor);
@@ -34,7 +34,7 @@ type MeteorSpec = {
 
 export const createMeteor = async (spec: MeteorSpec) => {
   const body = {
-    apiVersion: 'meteor.operate-first.cloud/v1alpha1',
+    apiVersion: 'meteor.zone/v1alpha1',
     kind: 'Meteor',
     metadata: {
       generateName: 'meteor-',
