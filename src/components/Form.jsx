@@ -30,6 +30,10 @@ const MeteorForm = () => {
     setPristine(false);
   };
 
+  const handleTtlChange = (v) => {
+    setTtl(TTL_OPTIONS[v]);
+  };
+
   const handleSubmit = async (event) => {
     if (validate() === 'error' || pristine) {
       return;
@@ -117,7 +121,7 @@ const MeteorForm = () => {
                     className={styles.dropdown}
                     initialValue={DEFAULT_TTL_OPTION}
                     dropdownItems={Object.keys(TTL_OPTIONS)}
-                    onSelect={setTtl}
+                    onSelect={handleTtlChange}
                   />
                 </FlexItem>
                 <FlexItem grow={{ default: 'grow' }}>
