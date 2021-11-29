@@ -8,11 +8,13 @@ if (process.env.NODE_ENV == 'development') {
 }
 
 // Arbitrary metrics counting page hits
-export const httpRequestsTotal = new Counter({
-  name: 'meteor_shower_http_requests_total',
-  help: 'Total requests received',
-  labelNames: ['method', 'statusCode', 'path'],
-});
+export const httpRequestsTotal =
+  (register.getSingleMetric('meteor_shower_http_requests_total') as Counter<string>) ||
+  new Counter({
+    name: 'meteor_shower_http_requests_total',
+    help: 'Total requests received',
+    labelNames: ['method', 'statusCode', 'path'],
+  });
 
 export default {
   httpRequestsTotal,
