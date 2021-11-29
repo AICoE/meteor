@@ -54,7 +54,11 @@ const MeteorTile = ({ name, content, isLoading, phase, pipelines, localMeteors, 
               <DataListCell key="phase" isIcon>
                 <PhaseIcon phase={phase} />
               </DataListCell>,
-              <DataListCell key="name">{name}</DataListCell>,
+              <DataListCell key="name">
+                <Link key="details" href={`/order/${name}`}>
+                  {name}
+                </Link>
+              </DataListCell>,
               <DataListCell key="url" width={2}>
                 {content}
               </DataListCell>,
