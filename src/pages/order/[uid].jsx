@@ -27,7 +27,6 @@ const Order = () => {
     ...p,
     label: PIPELINES.filter((c) => c.value === p.name)[0]?.label || p.name,
   }));
-  console.log(PIPELINES);
 
   return (
     <Layout>

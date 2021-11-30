@@ -42,7 +42,10 @@ const Description = ({ order, isLoading }) => {
         </>
       ),
     },
-    { description: 'Expires in', value: !isLoading && order?.status && <Time date={new Date(order.status.expirationTimestamp)} /> },
+    {
+      description: 'Expires in',
+      value: !isLoading && (isNaN(order?.spec?.ttl) ? 'Never' : order?.status && <Time date={new Date(order.status.expirationTimestamp)} />),
+    },
   ];
 
   return (

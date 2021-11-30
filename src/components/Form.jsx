@@ -16,7 +16,7 @@ import { useAlerts } from '../contexts/Alerts';
 const MeteorForm = () => {
   const [url, setUrl] = useState('');
   const [ref, setRef] = useState('HEAD');
-  const [ttl, setTtl] = useState(null);
+  const [ttl, setTtl] = useState(TTL_OPTIONS[DEFAULT_TTL_OPTION]);
   const [pipelines, setPipelines] = useState([]);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [pristine, setPristine] = useState(true);
