@@ -19,7 +19,7 @@ a separation of these is advised.
 
 ## Considered Options
 
-1. Tekton YAML as port of meteor-operator
+1. Tekton YAML as part of meteor-operator
 2. Tekton YAML as a seperate Helm application
 3. Tekton YAML as a seperate GitHub repository with Kustomize manifests
 4. Tekton YAML as a seperate Tekton Bundle
