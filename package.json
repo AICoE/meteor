@@ -5,7 +5,7 @@
   "dependencies": {
     "@kubernetes/client-node": "^0.16.2",
     "@patternfly/patternfly": "^4.164.2",
-    "@patternfly/react-core": "^4.181.1",
+    "@patternfly/react-core": "^4.198.5",
     "next": "^12.0.8",
     "next-transpile-modules": "^9.0.0",
     "prom-client": "^14.0.1",
