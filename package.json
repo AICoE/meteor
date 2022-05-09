@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@kubernetes/client-node": "^0.16.2",
-    "@patternfly/patternfly": "^4.164.2",
+    "@patternfly/patternfly": "^4.192.1",
     "@patternfly/react-core": "^4.198.19",
     "next": "^12.0.8",
     "next-transpile-modules": "^9.0.0",
@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.16.12",
-    "@types/react": "^17.0.38",
+    "@types/react": "^18.0.9",
     "@types/react-dom": "^17.0.11",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
@@ -27,7 +27,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.28.0",
     "prettier": "^2.5.1",
-    "sass": "^1.49.0",
+    "sass": "^1.51.0",
     "typescript": "^4.5.4"
   },
   "scripts": {
