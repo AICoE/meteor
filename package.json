@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "@kubernetes/client-node": "^0.17.1",
+    "@kubernetes/client-node": "^0.18.0",
     "@patternfly/patternfly": "^4.222.4",
     "@patternfly/react-core": "^4.264.0",
     "next": "^12.1.6",
